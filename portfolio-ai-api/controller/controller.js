@@ -1,5 +1,5 @@
-import {openai, addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, logAction } from "../utils.js";
-import { generateToken } from "../auth.js";
+import {openai, addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, logAction } from "../utils/utils.js";
+import { generateToken } from "../middleware/auth.js";
 
 //temporary admin user 
 const adminUser = {
