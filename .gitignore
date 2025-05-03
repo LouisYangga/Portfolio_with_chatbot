@@ -11,3 +11,6 @@ logs/
 # OS/system files
 .DS_Store
 Thumbs.db
+
+# local json files
+data/*.json
