@@ -2,94 +2,117 @@ import { OpenAI } from "openai";
 import * as fs from "fs/promises";
 import dotenv from "dotenv";
 import path from "path";
-import { getEmbedding, cosineSimilarity } from "./embed_knowledge.js";
+import { getEmbedding } from "./embed_knowledge.js";
+import { initPineconeIndex } from "../pineconeClient.js";
+const index = await initPineconeIndex();
 dotenv.config();
 
 export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function addKnowledge(id, content) {
-    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
-    const knowledgeBase = JSON.parse(data);
-
-    const existingEntry = knowledgeBase.find((item) => item.id === id);
-    if (existingEntry) {
-        throw new Error(`Knowledge item with ID ${id} already exists.`);
+  try {
+    // Check if the ID already exists in Pinecone
+    if ((await checkIdExists(id))) {
+      throw new Error(`Knowledge item with ID ${id} already exists in Pinecone.`);
     }
+    // Generate embedding for the new content
     const embedding = await getEmbedding(content);
-    const newEntry = { id: id, content: content, embedding };
 
-    knowledgeBase.push(newEntry);
+    // Add the new entry to Pinecone
+    await index.upsert([
+      {
+        id: id,
+        values: embedding,
+        metadata: { content: content },
+      },
+    ]);
 
-    await fs.writeFile("./data/embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
-    console.log(`New knowledge item with ID ${id} added successfully.`);
+    console.log(`New knowledge item with ID ${id} added successfully to Pinecone.`);
+  } catch (error) {
+    console.error(`Failed to add knowledge item with ID ${id}:`, error.message);
+    throw error;
+  }
 }
 export async function updateKnowledge(id, newContent) {
-    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
-    const knowledgeBase = JSON.parse(data);
-
-    const itemIndex = knowledgeBase.findIndex((item) => item.id === id);
-    if (itemIndex === -1) {
-        throw new Error(`Knowledge item with ID ${id} not found.`);
+  try {
+    // Check if the ID exists in Pinecone
+    if (!(await checkIdExists(id))) {
+      throw new Error(`Knowledge item with ID ${id} not found in Pinecone.`);
     }
 
+    // Generate updated embedding for the new content
     const updatedEmbedding = await getEmbedding(newContent);
-    knowledgeBase[itemIndex].content = newContent;
-    knowledgeBase[itemIndex].embedding = updatedEmbedding;
 
-    await fs.writeFile("./data/embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
-    console.log(`Knowledge item with ID ${id} updated successfully.`);
+    // Update the entry in Pinecone
+    await index.upsert([
+      {
+        id: id,
+        values: updatedEmbedding,
+        metadata: { content: newContent },
+      },
+    ]);
+
+    console.log(`Knowledge item with ID ${id} updated successfully in Pinecone.`);
+  } catch (error) {
+    console.error(`Failed to update knowledge item with ID ${id}:`, error.message);
+    throw error;
+  }
 }
 export async function deleteKnowledge(id) {
-    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
-    const knowledgeBase = JSON.parse(data);
 
-    const itemIndex = knowledgeBase.findIndex((item) => item.id === id);
-    if (itemIndex === -1) {
+    if (!(await checkIdExists(id))) {
         throw new Error(`Knowledge item with ID ${id} not found.`);
     }
 
-    knowledgeBase.splice(itemIndex, 1);
-
-    await fs.writeFile("./data/embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
+    await index.deleteOne([id]);
     console.log(`Knowledge item with ID ${id} deleted successfully.`);
 }
-// Function to search the knowledge base using cosine similarity
+// Function to search the knowledge base using Pinecone
 export async function searchKnowledgeBase(userEmbedding, topN = 5) {	
-  const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
-  const knowledgeBase = JSON.parse(data);
-
-  const results = knowledgeBase.map((item) => {
-  const similarity = cosineSimilarity(userEmbedding, item.embedding);
-    return { ...item, similarity };
+  const result = await index.query({
+    vector: userEmbedding,
+    topK: topN,
+    includeMetadata: true,
   });
- 
-//  Log all similarity scores
-//  results.forEach((r) =>
-//     console.log(`[${r.id}] Similarity: ${r.similarity.toFixed(4)}`)
-//   );
-  
-  results.sort((a, b) => b.similarity - a.similarity);
-  return results.slice(0, topN); // top N matches
+  const matches = result.matches.map(match => ({
+    id: match.id,
+    content: match.metadata?.content || "",
+    similarity: match.score, // Pinecone score
+  }));
+  return matches;
 }
 
-const THRESHOLD = 0.15; // Adjustable threshold for similarity
+const THRESHOLD = 0.2; // Adjustable threshold for similarity
 // Function to get relevant context based on the question
 export async function getRelevantContext(question) {
-    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
-    const knowledgeBase = JSON.parse(data);
     const questionLower = question.toLowerCase();
 
     //define category based shortcut
     const categories ={
         experience: (id) => id.startsWith("experience"),
         skills: (id) => id.startsWith("skills"),
+        location: (id) => id.startsWith("location"),
+        languages: (id) => id.startsWith("languages"),
+        contact: (id) => id.startsWith("contact"),
         food: (id) => id.startsWith("food"),
+        hobbies: (id) => id.startsWith("hobbies")
     }
 
     for(const [category ,check] of Object.entries(categories)){
         if(questionLower.includes(category)){
-            const matches = knowledgeBase.filter(item => check(item.id));
-            return matches.map(item => item.content).join("\n");
+          const query = await index.query({
+            vector: await getEmbedding(question),
+            topK: 10,
+            includeMetadata: true,
+          });
+          
+          const categoryMatches = query.matches
+          .filter((match) => check(match.id))
+          .map((match) => match.metadata.content);  
+          
+          if (categoryMatches.length) {
+              return categoryMatches.join("\n");
+          }
         }
     }
 
@@ -104,9 +127,7 @@ export async function getRelevantContext(question) {
     // console.log(`////////////////////////////////////////////`);
 
     const relevantEntries = results.filter((item) => item.similarity >= THRESHOLD);
-
     if (relevantEntries.length === 0) {return null;}
-
     return relevantEntries.map((item) => item.content).join("\n");
 }
 // Function to log user actions
@@ -123,4 +144,9 @@ export function logAction({ username, action, id, content, ip }) {
     fs.appendFile(logFilePath, JSON.stringify(logEntry) + "\n", (err) => {
       if (err) console.error("Failed to write log:", err);
     });
+  }
+
+  async function checkIdExists(id) {
+    const existingEntry = await index.fetch([id]);
+    return existingEntry?.records && Object.keys(existingEntry.records).includes(id);
   }

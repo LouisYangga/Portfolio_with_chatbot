@@ -30,14 +30,49 @@ export function cosineSimilarity(vecA, vecB) {
   return dot / (magA * magB);
 }
 // Main: generate embeddings for all knowledge base items
-// and save to a new file
-async function generateEmbeddings() {
-  const knowledgeBase = await loadKnowledgeBase();
-  const embeddedData = [];
+// and save to a new file, "embedded_knowledge.json" local file
+// async function generateEmbeddings() {
+//   const knowledgeBase = await loadKnowledgeBase();
+//   const embeddedData = [];
 
+//   for (const item of knowledgeBase) {
+//     try {
+//       console.log(`Embedding: ${item.id}`);
+//       const embedding = await getEmbedding(item.content);
+
+//       // Validate the embedding
+//       if (!Array.isArray(embedding) || embedding.some(e => typeof e !== 'number')) {
+//         throw new Error(`Invalid embedding format for ${item.id}`);
+//       }
+
+//       embeddedData.push({
+//         id: item.id,
+//         content: item.content,
+//         embedding: embedding,
+//       });
+//     } catch (err) {
+//       console.error(`Failed to process ${item.id}:`, err);
+//     }
+//   }
+
+//   await fs.writeFile(
+//     "./data/embedded_knowledge.json",
+//     JSON.stringify(embeddedData, null, 2),
+//     "utf-8"
+//   );
+//   console.log("All embeddings saved to embedded_knowledge.json");
+// }
+
+// generateEmbeddings();
+//add knowledge to Pinecone - cloud database
+// This function reads the knowledge base from a local file, generates embeddings for each item, and upserts them to Pinecone.
+import { initPineconeIndex } from "../pineconeClient.js";
+async function addKnowledgeToPinecone() {
+  const knowledgeBase = await loadKnowledgeBase();
+  const index = await initPineconeIndex();
   for (const item of knowledgeBase) {
     try {
-      console.log(`Embedding: ${item.id}`);
+      console.log(`Processing: ${item.id}`);
       const embedding = await getEmbedding(item.content);
 
       // Validate the embedding
@@ -45,22 +80,21 @@ async function generateEmbeddings() {
         throw new Error(`Invalid embedding format for ${item.id}`);
       }
 
-      embeddedData.push({
-        id: item.id,
-        content: item.content,
-        embedding: embedding,
-      });
+      // Upsert to Pinecone
+      await index.upsert([
+        {
+          id: item.id,
+          values: embedding,
+          metadata: { content: item.content },
+        },
+      ]);
+
+      console.log(`Successfully added ${item.id} to Pinecone`);
     } catch (err) {
       console.error(`Failed to process ${item.id}:`, err);
     }
   }
 
-  await fs.writeFile(
-    "./data/embedded_knowledge.json",
-    JSON.stringify(embeddedData, null, 2),
-    "utf-8"
-  );
-  console.log("All embeddings saved to embedded_knowledge.json");
+  console.log("All knowledge base items have been added to Pinecone.");
 }
-
-// generateEmbeddings();
+// addKnowledgeToPinecone();

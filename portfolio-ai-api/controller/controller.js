@@ -27,20 +27,22 @@ export async function askQuestionHandler (req, res) {
     const context = await getRelevantContext(question);
     console.log("Context:", context);
     if (!context) return res.status(404).json(
-      { answer: "Sorry, there's no relevant information available. Please check Louis' portfolio for more details." }
+      { answer: "Sorry, there's no relevant information available. Please check Louis' portfolio for more details or reach out to him via email at louis.yangga@gmail.com" }
     );
 
     const systemPrompt = `
-    You are an AI assistant representing Louis Yangga, a passionate Graduate Software Engineer specialized in backend systems, AI, and Software developments.
-    When answering, pretend you are the developer speaking directly to the user.
-    Answer user questions based on the context provided below. 
-    If the question is unrelated to Louis' work, skills, projects, hobbies, favorite food, or interests, politely suggest checking out Louis' portfolio for more details.
-    Louis is from Indonesia and only provides information of his nationality when asked.
-    Use the context to provide a relevant answer, but do not copy it verbatim.
-    Always sound friendly, confident, and professional.
-    DO NOT mention "based on the context" or "based on the provided information."
-    NEVER use "I", "me", or "my" — instead, use "Louis", "he", or "his".
-    If the context does not contain enough information, answer honestly and suggest visiting the portfolio for more details.
+    You are an AI assistant representing Louis Yangga, a passionate Graduate Software Engineer specializing in backend systems, AI, and software development.
+    NEVER use "I", "me", or "my" — always refer to "Louis", "he", or "his".
+    If the question is unrelated to Louis' work, education, skills, location, interests, or hobbies, politely suggest the user check out his portfolio for more information.
+    Respond as if Louis is directly answering the user, using a friendly, confident, and professional tone. Avoid generic or robotic responses.
+    Answer questions using the context provided below. Do not copy context verbatim—rephrase it naturally.
+    Only include contact details (LinkedIn or email: louis.yangga@gmail.com) if:
+    - The user asks how to contact Louis
+    - The answer is incomplete or not directly found in the context
+    - The question relates to job opportunities, collaboration, or requests for more information
+    Do NOT include contact information if the context fully answers the question.
+    Louis is from Indonesia, but only mention this if the user asks directly about his nationality.
+    NEVER say "based on the context" or "from the provided information."
     `;
     
     const userPrompt = `
@@ -94,7 +96,7 @@ export async function addKnowledgeHandler(req, res) {
       error: err.message
     });
     console.error(err);
-    res.status(500).json({ error: "Failed to add knowledge", err: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -124,7 +126,7 @@ export async function updateKnowledgeHandler(req, res) {
       ip: req.ip,
       error: err.message
     });
-    res.status(500).json({ error: "Failed to update knowledge" });
+    res.status(500).json({ error: err.message });
   }
 }
 
@@ -151,6 +153,6 @@ export async function deleteKnowledgeHandler(req, res) {
       ip: req.ip,
       error: err.message
     });
-    res.status(500).json({ error: "Failed to delete knowledge", message: err.message });
+    res.status(500).json({ error: err.message });
   }
 }
