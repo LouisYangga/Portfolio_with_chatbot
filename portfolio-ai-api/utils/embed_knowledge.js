@@ -11,17 +11,16 @@ const openai = new OpenAI({
 
 // Load knowledge base
 async function loadKnowledgeBase() {
-  const data = await fs.readFile("./knowledge.json", "utf-8");
+  const data = await fs.readFile("./data/knowledge.json", "utf-8");
   return JSON.parse(data);
 }
 
 // Get embedding from OpenAI
 export async function getEmbedding(text) {
   const response = await openai.embeddings.create({
-    model: "text-embedding-ada-002",
+    model: "text-embedding-3-small",
     input: text
   });
-
   return response.data[0].embedding;
 }
 export function cosineSimilarity(vecA, vecB) {
@@ -57,7 +56,7 @@ async function generateEmbeddings() {
   }
 
   await fs.writeFile(
-    "./embedded_knowledge.json",
+    "./data/embedded_knowledge.json",
     JSON.stringify(embeddedData, null, 2),
     "utf-8"
   );

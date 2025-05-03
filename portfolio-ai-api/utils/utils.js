@@ -72,7 +72,7 @@ export async function searchKnowledgeBase(userEmbedding, topN = 5) {
   return results.slice(0, topN); // top N matches
 }
 
-const THRESHOLD = 0.7; // Adjustable threshold for similarity
+const THRESHOLD = 0.15; // Adjustable threshold for similarity
 // Function to get relevant context based on the question
 export async function getRelevantContext(question) {
     const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
@@ -96,6 +96,13 @@ export async function getRelevantContext(question) {
     // Fallback to embedding similarity
     const userEmbedding = await getEmbedding(question);
     const results = await searchKnowledgeBase(userEmbedding); 
+    
+    //debugging
+    results.forEach((item) => {
+      console.log(`Context: ${item.content}, Similarity: ${item.similarity.toFixed(4)}`);
+    });
+    console.log(`////////////////////////////////////////////`);
+
     const relevantEntries = results.filter((item) => item.similarity >= THRESHOLD);
 
     if (relevantEntries.length === 0) {return null;}
