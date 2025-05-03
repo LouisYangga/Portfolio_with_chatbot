@@ -1,0 +1,92 @@
+[
+    {
+      "id": "about_me",
+      "content": "I am a passionate Graduate software engineer who enjoys building applications, AI systems, and creative projects. I have strong skills in software development, machine learning, and backend engineering. I did research on phishing link detection during my honours year. I am currently looking for a full-time software engineering position. I am working on a personal portfolio website that includes an AI-powered chatbot."
+    },
+    {
+      "id": "skills",
+      "content": "My technical skills include JavaScript, Node.js, Python, Java, SpringBoot, Microservices, MongoDB, C++, Restful API, AWS, FastAPI, React, SQL, and working with OpenAI APIs. I am also familiar with vector databases and embedding search techniques."
+    },
+    {
+      "id": "projects_portfolio_chatbot",
+      "content": "I am building a personal portfolio website that includes an AI-powered chatbot. The chatbot can answer questions about me and my work by using embedding search and a backend service."
+    },
+    {
+      "id": "experience1",
+      "content": "I have experience working on machine learning projects involving multi-label classification. I fine-tuned models like RoBERTa for text classification tasks on custom datasets.",
+      "metadata": {
+        "project_name": "Multi-label topic Classification",
+        "description": "I fine-tuned RoBERTa for multi-label classification tasks. I used Hugging Face Transformers and PyTorch for model training and evaluation. The project involved data preprocessing, model training, and performance evaluation using metrics like F1 score and accuracy.",
+        "technologies": ["Python", "PyTorch", "Hugging Face Transformers"]
+      }
+    },
+    {
+      "id": "experience2",
+      "content": "I have developed a web application using React and Node.js, implementing RESTful APIs and integrating with MongoDB for data storage for final year project.",
+      "metadata": {
+        "project_name": "Web Application Development",
+        "description": "I developed a web application using React for the frontend and Node.js for the backend. I implemented RESTful APIs for data communication and integrated MongoDB for data storage. The project involved user authentication, data management, and responsive design.",
+        "technologies": ["React", "Node.js", "MongoDB"]
+      }
+    },
+    {
+      "id": "experience3",
+      "content": "I have developed secure and scalable backend services for an Insurance system. I utilized Java and Spring Boot to create a robust backend system, ensuring efficient data handling and processing.",
+      "metadata": {
+        "project_name": "Insurance System Backend Development",
+        "description": "I developed a secure and scalable backend system for an insurance application using Java and Spring Boot. The project involved designing RESTful APIs, implementing security measures, and ensuring efficient data handling and processing.",
+        "technologies": ["Java", "Spring Boot"]
+      }
+    },
+    {
+      "id": "experience4",
+      "content": "I have experience in building microservices architecture, focusing on modularity and scalability. I have worked with Docker and Kubernetes for containerization and orchestration.",
+      "metadata": {
+        "project_name": "Microservices Architecture Development",
+        "description": "I built a microservices architecture for a web application, focusing on modularity and scalability. I utilized Docker for containerization and Kubernetes for orchestration, ensuring efficient deployment and management of services.",
+        "technologies": ["Docker", "Kubernetes","Java", "Spring Boot"]
+      }
+    },
+    {
+      "id": "experience5",
+      "content": "I have worked on a project that involved integrating OpenAI APIs for natural language processing tasks, enhancing user interaction and experience.",
+      "metadata": {
+        "project_name": "OpenAI API Integration",
+        "description": "I integrated OpenAI APIs for natural language processing tasks in a web application. The project involved implementing chat functionalities and enhancing user interaction through AI-driven responses.",
+        "technologies": ["JavaScript", "Node.js", "OpenAI API"]
+      }
+    },
+    {
+      "id": "education",
+      "content": "I graduated from the University of Wollongong with a Bachelor of Computer Science (Honours) in Software Engineering."
+    },
+    {
+    "id": "contact",
+    "content": "You can reach me at my email: louis.yangga@gmail.com or through my LinkedIn profile: https://www.linkedin.com/in/louis-yangga/."
+    },
+    {
+      "id": "location",
+      "content": "I am currently based in Sydney, Australia."
+    },
+    {
+      "id": "languages",
+      "content": "I am fluent in English and Indonesian. I have basic proficiency in Mandarin Chinese."
+    },
+    {
+      "id": "hobbies",
+      "content": "In my free time, I enjoy reading about AI advancements, exploring new technologies, and working on personal projects. I also love hiking, badminton and photography."
+    },
+    {
+      "id": "certifications",
+      "content": "I have completed a Bachelor of Computer Science (Honours) with a major in Software Engineering at the University of Wollongong. I have also completed several online courses in machine learning and web development."
+    },
+    {
+      "id": "interests",
+      "content": "I am deeply interested in AI development, backend systems, vector search technologies, and building high-quality, user-friendly web applications."
+    },
+    {
+      "id": "philosophy",
+      "content": "I believe in building modular, efficient systems that are easy to maintain. I enjoy learning new technologies and applying them creatively to real-world problems."
+    }
+  ]
+  
