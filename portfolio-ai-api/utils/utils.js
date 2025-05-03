@@ -8,7 +8,7 @@ dotenv.config();
 export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function addKnowledge(id, content) {
-    const data = await fs.readFile("./embedded_knowledge.json", "utf-8");
+    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
     const knowledgeBase = JSON.parse(data);
 
     const existingEntry = knowledgeBase.find((item) => item.id === id);
@@ -20,11 +20,11 @@ export async function addKnowledge(id, content) {
 
     knowledgeBase.push(newEntry);
 
-    await fs.writeFile("./embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
+    await fs.writeFile("./data/embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
     console.log(`New knowledge item with ID ${id} added successfully.`);
 }
 export async function updateKnowledge(id, newContent) {
-    const data = await fs.readFile("./embedded_knowledge.json", "utf-8");
+    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
     const knowledgeBase = JSON.parse(data);
 
     const itemIndex = knowledgeBase.findIndex((item) => item.id === id);
@@ -36,11 +36,11 @@ export async function updateKnowledge(id, newContent) {
     knowledgeBase[itemIndex].content = newContent;
     knowledgeBase[itemIndex].embedding = updatedEmbedding;
 
-    await fs.writeFile("./embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
+    await fs.writeFile("./data/embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
     console.log(`Knowledge item with ID ${id} updated successfully.`);
 }
 export async function deleteKnowledge(id) {
-    const data = await fs.readFile("./embedded_knowledge.json", "utf-8");
+    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
     const knowledgeBase = JSON.parse(data);
 
     const itemIndex = knowledgeBase.findIndex((item) => item.id === id);
@@ -50,12 +50,12 @@ export async function deleteKnowledge(id) {
 
     knowledgeBase.splice(itemIndex, 1);
 
-    await fs.writeFile("./embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
+    await fs.writeFile("./data/embedded_knowledge.json", JSON.stringify(knowledgeBase, null, 2), "utf-8");
     console.log(`Knowledge item with ID ${id} deleted successfully.`);
 }
 // Function to search the knowledge base using cosine similarity
 export async function searchKnowledgeBase(userEmbedding, topN = 5) {	
-  const data = await fs.readFile("./embedded_knowledge.json", "utf-8");
+  const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
   const knowledgeBase = JSON.parse(data);
 
   const results = knowledgeBase.map((item) => {
@@ -75,7 +75,7 @@ export async function searchKnowledgeBase(userEmbedding, topN = 5) {
 const THRESHOLD = 0.7; // Adjustable threshold for similarity
 // Function to get relevant context based on the question
 export async function getRelevantContext(question) {
-    const data = await fs.readFile("./embedded_knowledge.json", "utf-8");
+    const data = await fs.readFile("./data/embedded_knowledge.json", "utf-8");
     const knowledgeBase = JSON.parse(data);
     const questionLower = question.toLowerCase();
 
