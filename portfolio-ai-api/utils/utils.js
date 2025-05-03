@@ -97,11 +97,11 @@ export async function getRelevantContext(question) {
     const userEmbedding = await getEmbedding(question);
     const results = await searchKnowledgeBase(userEmbedding); 
     
-    //debugging
-    results.forEach((item) => {
-      console.log(`Context: ${item.content}, Similarity: ${item.similarity.toFixed(4)}`);
-    });
-    console.log(`////////////////////////////////////////////`);
+    //debugging for tuning the threshold
+    // results.forEach((item) => {
+    //   console.log(`Context: ${item.content}, Similarity: ${item.similarity.toFixed(4)}`);
+    // });
+    // console.log(`////////////////////////////////////////////`);
 
     const relevantEntries = results.filter((item) => item.similarity >= THRESHOLD);
 
