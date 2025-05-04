@@ -1,7 +1,8 @@
 import express from 'express';
 const router = express.Router();
 import { authenticateToken, checkApiKey } from '../middleware/middlewares.js';
-import { loginHandler, askQuestionHandler, addKnowledgeHandler, updateKnowledgeHandler, deleteKnowledgeHandler } from '../controller/controller.js';
+import { askQuestionHandler, addKnowledgeHandler, updateKnowledgeHandler, deleteKnowledgeHandler } from '../controller/controller.js';
+import { loginHandler } from '../controller/authController.js';
 
 router.post('/login', checkApiKey, loginHandler);
 

@@ -13,4 +13,4 @@ logs/
 Thumbs.db
 
 # local json files
-data/*.json
+portfolio-ai-api/data/*.json

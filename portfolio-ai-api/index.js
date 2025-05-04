@@ -1,12 +1,14 @@
 // app.js or index.js
 import express from "express";
 import dotenv from "dotenv";
+import connectDB from "./config/db.js"; // Import the database connection
 import routes from "./routes/routes.js";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 
+await connectDB(); // Connect to the database
 // Mount routes
 app.use("/api", routes); // All routes start with /api
 

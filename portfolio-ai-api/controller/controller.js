@@ -1,21 +1,4 @@
 import {openai, addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, logAction } from "../utils/utils.js";
-import { generateToken } from "../middleware/auth.js";
-
-//temporary admin user 
-const adminUser = {
-  username: "admin", 
-  password: "admin123" // Change this to a secure password in production
-};
-
-export function loginHandler (req, res) {
-  const { username, password } = req.body;
-
-  if (username === adminUser.username && password === adminUser.password) {
-    const token = generateToken({ username: "admin"});
-    return res.json({ token });
-  } 
-  return res.status(401).json({ error: "Invalid credentials" });
-};
 
 export async function askQuestionHandler (req, res) {
   const { question } = req.body;
