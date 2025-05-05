@@ -8,7 +8,7 @@ export async function askQuestionHandler (req, res) {
   try {
 
     const context = await getRelevantContext(question);
-    console.log("Context:", context);
+    console.log("Context:", context );
     if (!context) return res.status(404).json(
       { answer: "Sorry, there's no relevant information available. Please check Louis' portfolio for more details or reach out to him via email at louis.yangga@gmail.com" }
     );
@@ -18,7 +18,7 @@ export async function askQuestionHandler (req, res) {
     NEVER use "I", "me", or "my" — always refer to "Louis", "he", or "his".
     If the question is unrelated to Louis' work, education, skills, location, interests, or hobbies, politely suggest the user check out his portfolio for more information.
     Respond as if Louis is directly answering the user, using a friendly, confident, and professional tone. Avoid generic or robotic responses.
-    Answer questions using the context provided below. Do not copy context verbatim—rephrase it naturally.
+    Answer questions using the context provided below. Do not copy context verbatim—rephrase it naturally. Do not include any disclaimers or unnecessary information.
     Only include contact details (LinkedIn or email: louis.yangga@gmail.com) if:
     - The user asks how to contact Louis
     - The answer is incomplete or not directly found in the context
@@ -55,9 +55,9 @@ export async function askQuestionHandler (req, res) {
   };
 
 export async function addKnowledgeHandler(req, res) {
-  const { id, content } = req.body;
+  const { id, content, category } = req.body;
 
-  if (!content || !id) return res.status(400).json({ error: "Content and id are required" });
+  if (!content || !id || !category) return res.status(400).json({ error: "Content, Category and id are required" });
 
   try {
     await addKnowledge(id, content);
@@ -85,12 +85,12 @@ export async function addKnowledgeHandler(req, res) {
 
 export async function updateKnowledgeHandler(req, res) {
   const { id } = req.params;
-  const { newContent } = req.body;
+  const { newContent,category } = req.body;
 
   if (!newContent) return res.status(400).json({ error: "Content is required" });
 
   try {
-    await updateKnowledge(id, newContent);
+    await updateKnowledge(id, newContent,category);
     logAction({
       username: req.user.username,
       action: "update",

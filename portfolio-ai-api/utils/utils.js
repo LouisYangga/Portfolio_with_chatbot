@@ -9,7 +9,7 @@ dotenv.config();
 
 export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export async function addKnowledge(id, content) {
+export async function addKnowledge(id, content, category) {
   try {
     // Check if the ID already exists in Pinecone
     if ((await checkIdExists(id))) {
@@ -23,7 +23,7 @@ export async function addKnowledge(id, content) {
       {
         id: id,
         values: embedding,
-        metadata: { content: content },
+        metadata: { content: content, category: category },	
       },
     ]);
 
@@ -33,22 +33,24 @@ export async function addKnowledge(id, content) {
     throw error;
   }
 }
-export async function updateKnowledge(id, newContent) {
+export async function updateKnowledge(id, newContent,category) {
   try {
     // Check if the ID exists in Pinecone
     if (!(await checkIdExists(id))) {
       throw new Error(`Knowledge item with ID ${id} not found in Pinecone.`);
     }
-
+    const existingEntry = await index.fetch([id]);
+    const existingMetadata = existingEntry.records[id].metadata;
+    const finalCategory = category || existingMetadata.category; // Use existing category if available
     // Generate updated embedding for the new content
     const updatedEmbedding = await getEmbedding(newContent);
-
+    
     // Update the entry in Pinecone
     await index.upsert([
       {
         id: id,
         values: updatedEmbedding,
-        metadata: { content: newContent },
+        metadata: { content: newContent, category: finalCategory}, // Update metadata if needed
       },
     ]);
 
@@ -87,39 +89,38 @@ const THRESHOLD = 0.2; // Adjustable threshold for similarity
 export async function getRelevantContext(question) {
     const questionLower = question.toLowerCase();
 
-    //define category based shortcut
-    const categories ={
-        experience: (id) => id.startsWith("experience"),
-        skills: (id) => id.startsWith("skills"),
-        location: (id) => id.startsWith("location"),
-        languages: (id) => id.startsWith("languages"),
-        contact: (id) => id.startsWith("contact"),
-        food: (id) => id.startsWith("food"),
-        hobbies: (id) => id.startsWith("hobbies")
-    }
+    const categories = [
+      "experience",
+      "skills",
+      "location",
+      "languages",
+      "contact",
+      "food",
+      "hobbies"
+    ];
+    for (const category of categories) {
+      if (questionLower.includes(category)) {
+        const query = await index.query({
+          vector: await getEmbedding(question),
+          topK: 10,
+          includeMetadata: true,
+          filter: { category } // Only return items matching this category
+        });
 
-    for(const [category ,check] of Object.entries(categories)){
-        if(questionLower.includes(category)){
-          const query = await index.query({
-            vector: await getEmbedding(question),
-            topK: 10,
-            includeMetadata: true,
-          });
-          
-          const categoryMatches = query.matches
-          .filter((match) => check(match.id))
-          .map((match) => match.metadata.content);  
-          
-          if (categoryMatches.length) {
-              return categoryMatches.join("\n");
-          }
+        const categoryMatches = query.matches
+          .map((match) => match.metadata.content);
+        
+        if (categoryMatches.length) {
+          console.log(`Category: ${category}, Matches: ${categoryMatches.length}`);
+          return categoryMatches.join("\n");
+        }
         }
     }
 
     // Fallback to embedding similarity
     const userEmbedding = await getEmbedding(question);
     const results = await searchKnowledgeBase(userEmbedding); 
-    
+    console.log("fallback being called");
     //debugging for tuning the threshold
     // results.forEach((item) => {
     //   console.log(`Context: ${item.content}, Similarity: ${item.similarity.toFixed(4)}`);
