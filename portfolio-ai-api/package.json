@@ -11,12 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.802.0",
+    "@aws-sdk/s3-request-presigner": "^3.802.0",
     "@pinecone-database/pinecone": "^5.1.2",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.1",
-    "openai": "^4.96.0"
+    "multer": "^1.4.5-lts.2",
+    "openai": "^4.96.0",
+    "portfolio-ai-api": "file:"
   }
 }

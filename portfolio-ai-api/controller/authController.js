@@ -1,6 +1,6 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "../middleware/auth.js";
+import { generateToken } from "../middleware/authenticate.js";
 
 // This function seeds an admin user if it doesn't already exist
 export const seedAdminUser = async () => {

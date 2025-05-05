@@ -5,7 +5,7 @@ const resumeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    filename: {
+    fileName: {
         type: String,
         required: true,
     },
@@ -17,4 +17,4 @@ const resumeSchema = new mongoose.Schema({
 
 const Resume = mongoose.model('Resume', resumeSchema);
 
-module.exports = Resume;
+export default Resume;
