@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import Chat from '../Chat'
 import styled from 'styled-components'
 
@@ -10,11 +11,13 @@ const ChatbotSection = styled.section`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `
 
 const ChatDescription = styled.div`
   margin-bottom: 2rem;
-  max-width: 600px;
+  max-width: 700px;
+  text-align: left;
 
   h2 {
     margin-bottom: 1rem;
@@ -29,27 +32,50 @@ const ChatContainer = styled.div`
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  background-color: var(--light-navy);
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px -15px var(--navy-shadow);
   position: relative;
+  isolation: isolate;
+`
+
+const ChatButton = styled.button`
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background-color: transparent;
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: var(--fz-sm);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+
+  &:hover {
+    background-color: rgba(100,255,218,0.1);
+    transform: translateY(-3px);
+  }
 `
 
 const Chatbot = () => {
+  const [isChatOpen, setIsChatOpen] = useState(true)
+
   return (
     <ChatbotSection id="chatbot">
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        style={{ width: '100%' }}
       >
         <ChatDescription>
           <h2 className="section-heading">AI Assistant</h2>
           <p>Have a conversation with my AI assistant to learn more about my background, skills, and projects. Feel free to ask any questions!</p>
         </ChatDescription>
         <ChatContainer>
-          <Chat />
+          <Chat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+          {!isChatOpen && (
+            <ChatButton onClick={() => setIsChatOpen(true)}>
+              Open Chat
+            </ChatButton>
+          )}
         </ChatContainer>
       </motion.div>
     </ChatbotSection>
