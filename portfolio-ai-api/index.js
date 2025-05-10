@@ -11,9 +11,9 @@ app.use(express.json());
 
 // Configure CORS
 app.use(cors({
-  origin: "http://localhost:5173", // Your frontend URL
+  origin: "http://localhost:5173", // frontend URL
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "x-api-key"]
+  allowedHeaders: ["Content-Type", "x-api-key", "Authorization"]
 }));
 
 await connectDB(); // Connect to the database

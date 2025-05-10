@@ -60,7 +60,7 @@ export async function addKnowledgeHandler(req, res) {
   if (!content || !id || !category) return res.status(400).json({ error: "Content, Category and id are required" });
 
   try {
-    await addKnowledge(id, content);
+    await addKnowledge(id, content, category);
     logAction({
       username: req.user.username,
       action: "add",
