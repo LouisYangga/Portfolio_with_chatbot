@@ -4,7 +4,8 @@ import { authenticateToken, checkApiKey } from '../middleware/securityMiddleware
 import {upload} from '../middleware/uploadMiddleware.js';
 import { askQuestionHandler, addKnowledgeHandler, updateKnowledgeHandler, deleteKnowledgeHandler } from '../controller/controller.js';
 import { loginHandler } from '../controller/authController.js';
-import { uploadResume, downloadResume } from '../controller/resumeController.js'
+import { uploadResume, downloadResume } from '../controller/resumeController.js';
+import { sendContactEmail } from '../controller/emailController.js';
 
 router.get('/resume', checkApiKey, downloadResume);
 
@@ -19,6 +20,8 @@ router.post('/knowledge', checkApiKey, authenticateToken, addKnowledgeHandler);
 router.put('/knowledge/:id', checkApiKey, authenticateToken, updateKnowledgeHandler);
 
 router.delete('/knowledge', checkApiKey, authenticateToken, deleteKnowledgeHandler);
+
+router.post('/contact', checkApiKey, sendContactEmail);
 
 export default router;
 

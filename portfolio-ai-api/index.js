@@ -3,10 +3,18 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js"; // Import the database connection
 import routes from "./routes/routes.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+
+// Configure CORS
+app.use(cors({
+  origin: "http://localhost:5173", // Your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "x-api-key"]
+}));
 
 await connectDB(); // Connect to the database
 // Mount routes
