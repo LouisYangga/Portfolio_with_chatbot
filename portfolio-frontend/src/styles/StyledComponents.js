@@ -197,3 +197,41 @@ export const LogoLink = styled.a`
     }
   }
 `
+
+export const LogoSVG = styled.svg.attrs({
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 100 100",
+  width: "50",
+  height: "50"
+})`
+  .logo-text {
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 48px;
+    fill: #64ffda;
+    letter-spacing: 2px;
+    filter: drop-shadow(0 2px 8px rgba(100,255,218,0.2));
+  }
+
+  .logo-border {
+    fill: none;
+    stroke: #64ffda;
+    stroke-width: 3;
+  }
+`
+
+export const LogoRect = styled.rect.attrs({
+  x: "4",
+  y: "4",
+  width: "92",
+  height: "92",
+  rx: "16",
+  ry: "16"
+})``;
+
+export const LogoText = styled.text.attrs({
+  x: "50%",
+  y: "55%",
+  textAnchor: "middle",
+  dominantBaseline: "middle"
+})``;

@@ -1,6 +1,18 @@
 import { useState, useRef } from 'react'
 import { FiMenu, FiGithub, FiLinkedin } from 'react-icons/fi'
-import { MainContent, StyledHeader, Nav, NavLinks, NavLink, SocialLinks, HamburgerButton, LogoLink } from './styles/StyledComponents'
+import { 
+  MainContent, 
+  StyledHeader, 
+  Nav, 
+  NavLinks, 
+  NavLink, 
+  SocialLinks, 
+  HamburgerButton, 
+  LogoLink, 
+  LogoSVG,
+  LogoRect,
+  LogoText
+} from './styles/StyledComponents'
 import Hero from './components/sections/Hero'
 import Chatbot from './components/sections/Chatbot'
 import About from './components/sections/About'
@@ -18,42 +30,12 @@ function App() {
       <StyledHeader>
         <Nav>
           <LogoLink href="#home" aria-label="home">
-            <svg
-              id="logo"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 100 100"
-              width="50"
-              height="50"
-            >
-              <rect
-                x="4"
-                y="4"
-                width="92"
-                height="92"
-                rx="16"
-                ry="16"
-                fill="none"
-                stroke="#64ffda"
-                strokeWidth="3"
-                className="logo-border"
-              />
-              <text
-                x="50%"
-                y="55%"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontFamily="'Montserrat', 'Segoe UI', Arial, sans-serif"
-                fontWeight="bold"
-                fontSize="48"
-                fill="#64ffda"
-                letterSpacing="2"
-                style={{
-                  filter: 'drop-shadow(0 2px 8px rgba(100,255,218,0.2))'
-                }}
-              >
+            <LogoSVG id="logo">
+              <LogoRect className="logo-border" />
+              <LogoText className="logo-text">
                 LY
-              </text>
-            </svg>
+              </LogoText>
+            </LogoSVG>
           </LogoLink>
 
           <NavLinks>
