@@ -169,3 +169,31 @@ export const MobileMenu = styled(motion.div)`
     }
   }
 `
+
+export const LogoLink = styled.a`
+  display: inline-block;
+  border-radius: 16px;
+  transition: box-shadow 0.3s;
+
+  svg {
+    display: block;
+  }
+
+  .logo-border {
+    stroke-dasharray: 368;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.7s;
+  }
+
+  &:hover .logo-border {
+    stroke-dasharray: 368;
+    stroke-dashoffset: 368;
+    animation: border-move 0.7s forwards;
+  }
+
+  @keyframes border-move {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+`
