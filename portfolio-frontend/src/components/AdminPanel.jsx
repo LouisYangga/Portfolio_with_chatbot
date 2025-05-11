@@ -9,6 +9,8 @@ import {
   StatusMessage
 } from '../styles/AdminStyles'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AdminPanel = ({ token }) => {
   const [knowledgeJson, setKnowledgeJson] = useState('');
   const [file, setFile] = useState(null);
@@ -29,7 +31,7 @@ const AdminPanel = ({ token }) => {
         throw new Error('Invalid JSON format');
       }
 
-      const response = await fetch('http://localhost:3000/api/knowledge', {
+      const response = await fetch(`${API_URL}/api/knowledge`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ const AdminPanel = ({ token }) => {
         throw new Error('ID is required for updating knowledge');
       }
 
-      const response = await fetch(`http://localhost:3000/api/knowledge/${jsonData.id}`, {
+      const response = await fetch(`${API_URL}/api/knowledge/${jsonData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +99,7 @@ const AdminPanel = ({ token }) => {
         throw new Error('Invalid JSON format');
       }
 
-      const response = await fetch('http://localhost:3000/api/knowledge', {
+      const response = await fetch(`${API_URL}/api/knowledge`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +132,7 @@ const AdminPanel = ({ token }) => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3000/api/resume', {
+      const response = await fetch(`${API_URL}/api/resume`, {
         method: 'POST',
         headers: {
           'x-api-key': import.meta.env.VITE_API_KEY,

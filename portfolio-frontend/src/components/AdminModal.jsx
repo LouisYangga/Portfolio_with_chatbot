@@ -11,6 +11,8 @@ import {
   StatusMessage
 } from '../styles/AdminStyles'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AdminModal = ({ isOpen, onClose, onLogin }) => {
   const [formData, setFormData] = useState({
     username: '',
@@ -33,7 +35,7 @@ const AdminModal = ({ isOpen, onClose, onLogin }) => {
     setSubmitStatus({ type: '', message: '' });
     
     try {
-      const response = await fetch('http://localhost:3000/api/login', {
+      const response = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

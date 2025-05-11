@@ -11,6 +11,8 @@ import {
   RetryButton
 } from '../styles/ChatStyles'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Chat = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState('')
@@ -97,7 +99,7 @@ const Chat = ({ isOpen, onClose }) => {
     setMessages(prev => [...prev, { text: userInput, isUser: true }])
 
     try {
-      const response = await fetch('http://localhost:3000/api/ask', {
+      const response = await fetch(`${API_URL}/api/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +134,7 @@ const Chat = ({ isOpen, onClose }) => {
     setIsLoading(true)
 
     try {
-      const response = await fetch('http://localhost:3000/api/ask', {
+      const response = await fetch(`${API_URL}/api/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

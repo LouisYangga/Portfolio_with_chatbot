@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { EducationSection } from '../../styles/SectionStyles'
- import styled from 'styled-components'
+import styled from 'styled-components'
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ResumeButton = styled.a`
   display: inline-block;
@@ -30,7 +32,7 @@ const Education = () => {
   const handleResumeDownload = async () => {
     try {
       setIsLoading(true)
-      const response = await fetch('http://localhost:3000/api/resume', {
+      const response = await fetch(`${API_URL}/api/resume`, {
         headers: {
           'x-api-key': import.meta.env.VITE_API_KEY
         }

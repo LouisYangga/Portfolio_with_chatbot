@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX } from 'react-icons/fi'
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ModalOverlay = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -121,7 +123,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     setSubmitStatus({ type: '', message: '' });
     
     try {
-      const response = await fetch('http://localhost:3000/api/contact', {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
