@@ -6,6 +6,10 @@ import { askQuestionHandler, addKnowledgeHandler, updateKnowledgeHandler, delete
 import { loginHandler } from '../controller/authController.js';
 import { uploadResume, downloadResume } from '../controller/resumeController.js';
 import { sendContactEmail } from '../controller/emailController.js';
+import { keepAlive } from '../controller/keepAliveController.js';
+
+// Keep-alive endpoint for UptimeRobot (no API key required)
+router.get('/keep-alive', keepAlive);
 
 router.get('/resume', checkApiKey, downloadResume);
 
