@@ -11,6 +11,7 @@ A modern, interactive portfolio website featuring an AI-powered chatbot assistan
 - 📧 **Contact System**: Email integration using Nodemailer
 - 🔐 **Secure Authentication**: JWT-based admin authentication
 - 💫 **Modern UI**: Responsive design with smooth animations using Framer Motion
+- 🔄 **Server Monitoring**: UptimeRobot integration to prevent idle timeout on free hosting plans
 
 ## Technology Stack
 
@@ -36,16 +37,17 @@ portfolio-project/
 ├── portfolio-frontend/     # React frontend application
 │   ├── src/
 │   │   ├── components/     # React components
-│   │   ├── styles/        # Styled components
-│   │   └── hooks/         # Custom React hooks
-│   └── public/            # Static assets
+│   │   ├── styles/         # Styled components
+│   │   └── hooks/          # Custom React hooks
+│   └── public/             # Static assets
 │
-└── portfolio-ai-api/      # Node.js backend server
-    ├── controller/        # Route controllers
-    ├── middleware/        # Express middleware
-    ├── models/           # Mongoose models
-    ├── routes/           # API routes
-    └── utils/            # Utility functions
+└── portfolio-ai-api/       # Node.js backend server
+    ├── controller/         # Route controllers
+    ├── middleware/         # Express middleware
+    ├── models/             # Mongoose models
+    ├── routes/             # API routes
+    ├── utils/              # Utility functions
+    └── logs/               # Activity logs
 ```
 
 ## Setup and Installation
@@ -74,6 +76,7 @@ npm install
 Frontend (.env):
 ```
 VITE_API_KEY=your_api_key
+VITE_API_URL=your_backend_url
 ```
 
 Backend (.env):
@@ -81,12 +84,19 @@ Backend (.env):
 PORT=3000
 OPENAI_API_KEY=your_openai_key
 PINECONE_API_KEY=your_pinecone_key
+PINECONE_INDEX_NAME=your_pinecone_index
+PINECONE_INDEX_HOST=your_pinecone_host
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=1d
+AWS_REGION=your_aws_region
 AWS_ACCESS_KEY_ID=your_aws_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret
+S3_BUCKET_NAME=your_s3_bucket_name
 EMAIL_USER=your_email
+EMAIL_RECIPIENT=your_recipient_email
 EMAIL_APP_PASSWORD=your_email_app_password
+API_KEY=your_api_key
 ```
 
 4. Start the development servers:
@@ -121,6 +131,11 @@ node index.js
 - Form validation
 - Automated email notifications
 
+### Keep-Alive System
+- UptimeRobot integration to prevent the server from sleeping
+- Cost-efficient API warm-up functionality
+- Monitoring endpoint that checks server and database health
+
 ## Security Features
 
 - API key authentication for endpoints
@@ -131,10 +146,23 @@ node index.js
 
 ## Deployment
 
-The application is designed to be deployed as two separate services:
+The application is deployed as two separate services:
 
-1. Frontend: Can be deployed to Vercel, Netlify, or similar platforms
-2. Backend: Suitable for deployment on AWS, Heroku, or similar services
+1. Frontend: Deploy to Vercel, Netlify, or similar static hosting platforms
+   - Configure environment variables in the hosting platform dashboard
+   - Set `VITE_API_URL` to your deployed backend URL
+
+2. Backend: Deployed on Render (https://portfolio-with-chatbot.onrender.com)
+   - Configure environment variables in the Render dashboard
+   - Set up a keep-alive monitor with UptimeRobot to prevent idle timeout
+
+### Setting Up UptimeRobot
+
+1. Create a free account at [UptimeRobot](https://uptimerobot.com/)
+2. Add a new HTTP(s) monitor
+3. Set the URL to `https://your-backend-url.com/api/keep-alive`
+4. Set the monitoring interval (recommended: 5 minutes)
+5. Save the monitor to start automatic pinging
 
 ## Contributing
 
@@ -154,3 +182,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Pinecone for vector database
 - AWS for S3 storage
 - MongoDB for database services
+- Render for backend hosting
+- UptimeRobot for monitoring services
