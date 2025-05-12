@@ -13,7 +13,8 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "https://portfolio-with-chatbot-five.vercel.app",  // Vercel-provided domain
-    "https://your-custom-domain.com",  // If you have a custom domain
+    "https://louisyangga.com", 
+    "https://www.louisyangga.com",
     "http://localhost:5173"  // For local development
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
