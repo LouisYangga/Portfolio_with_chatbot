@@ -1,11 +1,31 @@
 import { addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, logAction } from "../utils/utils.js";
 import connectionManager from "../utils/connections.js";
+import { getResumeUrl } from "./resumeController.js";
 
 export async function askQuestionHandler(req, res) {
   const { question } = req.body;
 
   if (!question) return res.status(400).json({ error: "Question is required" });
 
+  // Check if the question is about downloading or viewing the resume
+  const resumeRegex = /\b(resume|cv|curriculum vitae)\b.*\b(download|view|see|check|get)\b|\b(download|view|see|check|get)\b.*\b(resume|cv|curriculum vitae)\b/i;
+  
+  if (resumeRegex.test(question)) {
+    try {
+      const url = await getResumeUrl();
+      // Return answer with hyperlink format
+      return res.json({
+        answer: `Louis would be happy to share his resume with you. [download resume](${url})`
+      });
+    } catch (error) {
+      console.error('Resume download error:', error);
+      return res.json({
+        answer: "I apologize, but I'm having trouble generating the resume download link at the moment. Please try again in a few moments or contact Louis directly at louis.yangga@gmail.com"
+      });
+    }
+  }
+
+  // Continue with regular question handling
   try {
     const context = await getRelevantContext(question);
     console.log("Context:", context);

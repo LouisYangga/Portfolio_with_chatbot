@@ -50,24 +50,39 @@ export const uploadResume = async (req, res) => {
   }
 };
 
-// Download resume
+// Generate signed URL for resume download
+async function generateResumeUrl() {
+  const resume = await Resume.findOne().sort({ uploadedAt: -1 });
+  if (!resume) {
+    throw new Error("Resume not found.");
+  }
+
+  const downloadCommand = new GetObjectCommand({
+    Bucket: process.env.S3_BUCKET_NAME,
+    Key: resume.fileName,
+    ResponseContentDisposition: `attachment; filename="${resume.fileName}"`,
+  });
+
+  return getSignedUrl(s3, downloadCommand, { expiresIn: 60 });
+}
+
+// Download resume - API endpoint handler
 export const downloadResume = async (req, res) => {
   try {
-    const resume = await Resume.findOne().sort({ uploadedAt: -1 });
-    if (!resume) {
-      return res.status(404).json({ error: "Resume not found." });
-    }
-
-    const downloadCommand = new GetObjectCommand({
-      Bucket: process.env.S3_BUCKET_NAME,
-      Key: resume.fileName,
-    });
-
-    const downloadUrl = await getSignedUrl(s3, downloadCommand, { expiresIn: 60 });
-
-    res.json({ downloadUrl });
+    const downloadUrl = await generateResumeUrl();
+    return res.json({ downloadUrl });
   } catch (error) {
     console.error("Download error:", error);
-    res.status(500).json({ error: "Failed to generate download link." });
+    return res.status(500).json({ error: "Failed to generate download link." });
+  }
+};
+
+// Download resume - Chat handler
+export const getResumeUrl = async () => {
+  try {
+    return await generateResumeUrl();
+  } catch (error) {
+    console.error("Download error:", error);
+    throw error;
   }
 };

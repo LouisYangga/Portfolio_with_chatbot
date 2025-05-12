@@ -43,11 +43,21 @@ const Chat = ({ isOpen, onClose }) => {
   }, [messages])
 
   const renderMessageWithLinks = (text) => {
+    // Special handling for resume download links with markdown format
+    const resumePattern = /\[download resume\]\((.*?)\)/;
+    text = text.replace(resumePattern, '<a href="$1" target="_blank" rel="noopener noreferrer">download resume</a>');
+
+    // Handle other links
     const pattern = /((?:mailto:)?[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})|(?:\[(.*?)\])?\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s]+/g;
     let lastIndex = 0;
     const elements = [];
-    let match;
 
+    // If the text contains HTML (from resume link replacement), parse it differently
+    if (text.includes('<a href=')) {
+      return <span dangerouslySetInnerHTML={{ __html: text }} />;
+    }
+
+    let match;
     while ((match = pattern.exec(text)) !== null) {
       // Add text before the match
       if (match.index > lastIndex) {
