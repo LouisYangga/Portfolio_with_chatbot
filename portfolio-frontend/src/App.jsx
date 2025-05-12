@@ -36,6 +36,7 @@ function App() {
     setAdminToken(token);
   };
 
+  // We keep this function for potential use elsewhere, but remove it from the header
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     setAdminToken(null);
@@ -61,11 +62,7 @@ function App() {
             <NavLink href="#education">Education</NavLink>
             <NavLink href="#work">Work</NavLink>
             <NavLink href="#contact">Contact</NavLink>
-            {adminToken && (
-              <NavLink href="#" onClick={handleLogout} style={{ color: 'var(--green)' }}>
-                Logout
-              </NavLink>
-            )}
+            {/* Logout button removed from here - now in AdminPanel */}
           </NavLinks>
 
           <SocialLinks>

@@ -25,6 +25,43 @@ const ResumeButton = styled.a`
   }
 `
 
+const ResponsiveContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 1rem;
+    
+    .tab-list {
+      display: flex;
+      flex-direction: row !important;
+      width: 100% !important;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      
+      &::-webkit-scrollbar {
+        height: 3px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--green);
+      }
+    }
+    
+    .tab-button {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    
+    .tab-content {
+      margin-left: 0 !important;
+    }
+  }
+`
+
 const Education = () => {
   const [activeTab, setActiveTab] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
@@ -83,7 +120,7 @@ const Education = () => {
         viewport={{ once: true }}
       >
         <h2 className="section-heading">Education</h2>
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
+        <ResponsiveContainer>
           <div className="tab-list">
             {education.map((edu, i) => (
               <button
@@ -104,7 +141,7 @@ const Education = () => {
               ))}
             </ul>
           </div>
-        </div>
+        </ResponsiveContainer>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

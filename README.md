@@ -178,6 +178,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
+- Design inspiration from [Brittany Chiang](https://brittanychiang.com)
 - OpenAI for GPT API
 - Pinecone for vector database
 - AWS for S3 storage

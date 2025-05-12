@@ -9,12 +9,18 @@ export const ChatbotSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  @media (max-width: 480px) {
+    padding: 40px 0;
+    min-height: 80vh;
+  }
 `
 
 export const ChatDescription = styled.div`
   margin-bottom: 2rem;
   max-width: 700px;
   text-align: left;
+  padding: 0 20px;
 
   h2 {
     margin-bottom: 1rem;
@@ -22,6 +28,18 @@ export const ChatDescription = styled.div`
 
   p {
     color: var(--slate);
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 1.5rem;
+    
+    h2 {
+      font-size: 24px;
+    }
+    
+    p {
+      font-size: var(--fz-sm);
+    }
   }
 `
 
@@ -31,6 +49,10 @@ export const ChatContainer = styled.div`
   margin: 0 auto;
   position: relative;
   isolation: isolate;
+  
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
 `
 
 export const ChatButton = styled.button`
@@ -48,5 +70,10 @@ export const ChatButton = styled.button`
   &:hover {
     background-color: rgba(100,255,218,0.1);
     transform: translateY(-3px);
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
   }
 `

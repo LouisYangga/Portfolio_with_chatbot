@@ -14,6 +14,12 @@ export const ChatSection = styled(motion.div)`
   position: relative;
   isolation: isolate;
   height: fit-content;
+  
+  @media (max-width: 480px) {
+    border-radius: 12px;
+    margin: 0 10px;
+    width: calc(100% - 20px);
+  }
 `
 
 export const ChatHeader = styled.div`
@@ -65,6 +71,14 @@ export const ChatHeader = styled.div`
       color: var(--green);
     }
   }
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    
+    h3 {
+      font-size: var(--fz-md);
+    }
+  }
 `
 
 export const ChatMessages = styled.div`
@@ -96,6 +110,12 @@ export const ChatMessages = styled.div`
 
   & > *:last-child {
     scroll-snap-align: end;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    min-height: 350px;
+    max-height: 400px;
   }
 `
 
@@ -132,6 +152,13 @@ export const Message = styled.div`
       &:hover {
         opacity: 0.8;
       }
+    }
+    
+    @media (max-width: 480px) {
+      max-width: 95%;
+      padding: 10px 12px;
+      font-size: var(--fz-sm);
+      word-break: break-word;
     }
   }
 
@@ -195,6 +222,26 @@ export const ChatInput = styled.form`
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    gap: 8px;
+    
+    input {
+      padding: 8px 12px;
+      font-size: var(--fz-sm);
+    }
+    
+    button {
+      width: 36px;
+      height: 36px;
+      
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 `
