@@ -1,13 +1,8 @@
-import { OpenAI } from "openai";
 import dotenv from "dotenv";
 import fs from "fs/promises";
+import connectionManager from "./connections.js";
 
 dotenv.config();
-
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
 
 // Load knowledge base
 async function loadKnowledgeBase() {
@@ -17,18 +12,21 @@ async function loadKnowledgeBase() {
 
 // Get embedding from OpenAI
 export async function getEmbedding(text) {
+  const openai = connectionManager.getOpenAIClient();
   const response = await openai.embeddings.create({
     model: "text-embedding-3-small",
     input: text
   });
   return response.data[0].embedding;
 }
+
 export function cosineSimilarity(vecA, vecB) {
   const dot = vecA.reduce((sum, a, i) => sum + a * vecB[i], 0);
   const magA = Math.sqrt(vecA.reduce((sum, a) => sum + a * a, 0));
   const magB = Math.sqrt(vecB.reduce((sum, b) => sum + b * b, 0));
   return dot / (magA * magB);
 }
+
 // Main: generate embeddings for all knowledge base items
 // and save to a new file, "embedded_knowledge.json" local file
 // async function generateEmbeddings() {

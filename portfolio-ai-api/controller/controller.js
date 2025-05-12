@@ -1,18 +1,20 @@
-import {openai, addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, logAction } from "../utils/utils.js";
+import { addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, logAction } from "../utils/utils.js";
+import connectionManager from "../utils/connections.js";
 
-export async function askQuestionHandler (req, res) {
+export async function askQuestionHandler(req, res) {
   const { question } = req.body;
 
   if (!question) return res.status(400).json({ error: "Question is required" });
 
   try {
-
     const context = await getRelevantContext(question);
-    console.log("Context:", context );
+    console.log("Context:", context);
     if (!context) return res.status(404).json(
       { answer: "Sorry, there's no relevant information available. Please check Louis' portfolio for more details or reach out to him via email at louis.yangga@gmail.com" }
     );
 
+    const openai = connectionManager.getOpenAIClient();
+    
     const systemPrompt = `
     You are an AI assistant representing Louis Yangga, a passionate Graduate Software Engineer specializing in backend systems, AI, and software development.
     NEVER use "I", "me", or "my" — always refer to "Louis", "he", or "his".
@@ -43,16 +45,16 @@ export async function askQuestionHandler (req, res) {
         { role: "user", content: userPrompt }
       ],
       temperature: 0.7,
-      max_tokens: 500, // limit for the response length
+      max_tokens: 500,
     });
     
     const answer = gptRes.choices[0].message.content;
     res.json({ answer });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Something went wrong" });
-    }
-  };
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+}
 
 export async function addKnowledgeHandler(req, res) {
   const { id, content, category } = req.body;
@@ -85,12 +87,12 @@ export async function addKnowledgeHandler(req, res) {
 
 export async function updateKnowledgeHandler(req, res) {
   const { id } = req.params;
-  const { newContent,category } = req.body;
+  const { newContent, category } = req.body;
 
   if (!newContent) return res.status(400).json({ error: "Content is required" });
 
   try {
-    await updateKnowledge(id, newContent,category);
+    await updateKnowledge(id, newContent, category);
     logAction({
       username: req.user.username,
       action: "update",

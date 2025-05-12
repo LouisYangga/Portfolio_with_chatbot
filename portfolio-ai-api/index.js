@@ -1,9 +1,9 @@
-// app.js or index.js
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/db.js"; // Import the database connection
+import connectDB from "./config/db.js";
 import routes from "./routes/routes.js";
 import cors from "cors";
+import connectionManager from "./utils/connections.js";
 
 dotenv.config();
 const app = express();
@@ -16,11 +16,31 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "x-api-key", "Authorization"]
 }));
 
-await connectDB(); // Connect to the database
+// Initialize all connections
+const initializeServices = async () => {
+  try {
+    // Connect to MongoDB
+    await connectDB();
+    console.log("MongoDB connected successfully");
+
+    // Initialize OpenAI and Pinecone connections
+    await connectionManager.initialize();
+    console.log("OpenAI and Pinecone connections initialized successfully");
+
+  } catch (error) {
+    console.error("Failed to initialize services:", error);
+    process.exit(1);
+  }
+};
+
 // Mount routes
-app.use("/api", routes); // All routes start with /api
+app.use("/api", routes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+// Start server after initializing all services
+initializeServices().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
