@@ -9,7 +9,7 @@ const Work = () => {
       description: 'A modern, responsive portfolio site built using React and an integrated AI assistant for interactive user engagement. The backend is powered by Node.js, enabling scalable support for chatbot functionality and content management.',
       tech: ['React', 'Node.js', 'Framer Motion', 'Styled Components', 'PineCone', 'OpenAI', 'AWS S3','MongoDB'],
       github: 'https://github.com/LouisYangga/Portfolio_with_chatbot',
-      external: 'https://yourportfolio.com',
+      external: 'https://louisyangga.com',
     },
     {
       title: 'Multi Label Classification',
