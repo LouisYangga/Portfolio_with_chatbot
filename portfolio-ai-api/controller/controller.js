@@ -15,12 +15,12 @@ export async function askQuestionHandler(req, res) {
       const url = await getResumeUrl();
       // Return answer with hyperlink format
       return res.json({
-        answer: `Absolutely! You can view or download Louis' resume [here](${url}).`
+        answer: `Absolutely! You can view Louis' resume here: [click to view resume](${url})`
       });
     } catch (error) {
       console.error('Resume download error:', error);
       return res.json({
-        answer: "I apologize, but I'm having trouble generating the resume download link at the moment. Please try again in a few moments or contact Louis directly at louis.yangga@gmail.com"
+        answer: "I apologize, but I'm having trouble generating the resume link at the moment. Please try again in a few moments or contact Louis directly at louis.yangga@gmail.com"
       });
     }
   }

@@ -11,7 +11,9 @@ import { keepAlive } from '../controller/keepAliveController.js';
 // Keep-alive endpoint for UptimeRobot (no API key required)
 router.get('/keep-alive', keepAlive);
 
-router.get('/resume', checkApiKey, downloadResume);
+router.get('/resume/view', checkApiKey, downloadResume); //for viewing the resume in the browser (inline)
+
+router.get('/resume/download', checkApiKey, downloadResume);
 
 router.post('/resume', upload.single("file"), checkApiKey, authenticateToken, uploadResume);
 

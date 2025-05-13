@@ -66,33 +66,15 @@ const Education = () => {
   const [activeTab, setActiveTab] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   
-  const handleResumeDownload = async () => {
+  const handleResumeDownload = () => {
     try {
-      setIsLoading(true)
-      const response = await fetch(`${API_URL}/api/resume`, {
-        headers: {
-          'x-api-key': import.meta.env.VITE_API_KEY
-        }
-      });
-      
-      if (!response.ok) throw new Error('Failed to get download link');
-      
-      const data = await response.json();
-      
-      // Create a temporary anchor element
-      const link = document.createElement('a');
-      link.href = data.downloadUrl; 
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      
-      // Append to document, click, and remove
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      setIsLoading(true);
+      // Direct download using window.location
+      window.location.href = `${API_URL}/api/resume/download?key=${import.meta.env.VITE_API_KEY}`;
     } catch (error) {
       console.error('Error downloading resume:', error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
