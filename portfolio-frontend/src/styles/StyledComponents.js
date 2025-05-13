@@ -197,6 +197,24 @@ export const MobileMenu = styled(motion.div)`
         text-align: center;
       }
     }
+
+    .mobile-social-links {
+      position: absolute;
+      bottom: 50px;
+      display: flex;
+      gap: 20px;
+      
+      a {
+        color: var(--lightest-slate);
+        font-size: 20px;
+        padding: 10px;
+        
+        &:hover {
+          color: var(--green);
+          transform: translateY(-3px);
+        }
+      }
+    }
   }
 `
 

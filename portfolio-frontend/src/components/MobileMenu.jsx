@@ -1,4 +1,4 @@
-import { FiX } from 'react-icons/fi'
+import { FiX, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { MobileMenu as StyledMobileMenu } from '../styles/StyledComponents'
 
 const MobileMenu = ({ isOpen, onClose }) => {
@@ -18,6 +18,14 @@ const MobileMenu = ({ isOpen, onClose }) => {
         <a href="#work" onClick={onClose}>Work</a>
         <a href="#contact" onClick={onClose}>Contact</a>
       </nav>
+      <div className="mobile-social-links">
+        <a href="https://github.com/LouisYangga" target="_blank" rel="noopener noreferrer">
+          <FiGithub />
+        </a>
+        <a href="https://linkedin.com/in/louis-yangga" target="_blank" rel="noopener noreferrer">
+          <FiLinkedin />
+        </a>
+      </div>
     </StyledMobileMenu>
   )
 }
