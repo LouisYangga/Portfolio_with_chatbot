@@ -8,7 +8,7 @@ export async function askQuestionHandler(req, res) {
   if (!question) return res.status(400).json({ error: "Question is required" });
 
   // Check if the question is about downloading or viewing the resume
-  const resumeRegex = /\b(resume|cv|curriculum vitae)\b.*\b(download|view|see|check|get)\b|\b(download|view|see|check|get)\b.*\b(resume|cv|curriculum vitae)\b/i;
+  const resumeRegex = /\b(resume|cv|curriculum vitae)\b.*\b(download|view|see|check|get|send)\b|\b(download|view|see|check|get|send)\b.*\b(resume|cv|curriculum vitae)\b/i;
   
   if (resumeRegex.test(question)) {
     try {
