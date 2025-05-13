@@ -66,11 +66,31 @@ const Education = () => {
   const [activeTab, setActiveTab] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   
-  const handleResumeDownload = () => {
+  const handleResumeDownload = async () => {
     try {
       setIsLoading(true);
-      // Direct download using window.location
-      window.location.href = `${API_URL}/api/resume/download?key=${import.meta.env.VITE_API_KEY}`;
+      const response = await fetch(`${API_URL}/api/resume/download`, {
+        headers: {
+          'x-api-key': import.meta.env.VITE_API_KEY
+        }
+      });
+      
+      if (!response.ok) throw new Error('Failed to download resume');
+      
+      // Create a blob from the response
+      const blob = await response.blob();
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(blob);
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'LouisYangga-Resume.pdf';
+      // Trigger the download
+      document.body.appendChild(link);
+      link.click();
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error downloading resume:', error);
     } finally {
