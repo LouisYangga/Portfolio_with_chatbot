@@ -1,53 +1,57 @@
 # Portfolio with AI Assistant
 
-A modern, interactive portfolio website featuring an AI-powered chatbot assistant. This project combines a React frontend with a Node.js backend, incorporating advanced features like AI-driven conversations, resume management, and dynamic content updates.
+A modern, interactive portfolio website featuring an AI-powered chatbot assistant. This project showcases a seamless integration of React frontend with a Node.js backend, delivering an engaging user experience through AI-driven conversations, dynamic content management, and professional resume presentation.
 
-## Features
+## Key Features
 
-- 🤖 **AI Assistant**: Interactive chatbot powered by OpenAI's GPT models
-- 🔍 **Smart Knowledge Base**: Vector-based search using Pinecone for accurate information retrieval
-- 📝 **Dynamic Content Management**: Admin panel for real-time content updates
-- 📄 **Resume Management**: AWS S3 integration for resume storage and retrieval
-- 📧 **Contact System**: Email integration using Nodemailer
-- 🔐 **Secure Authentication**: JWT-based admin authentication
-- 💫 **Modern UI**: Responsive design with smooth animations using Framer Motion
-- 🔄 **Server Monitoring**: UptimeRobot integration to prevent idle timeout on free hosting plans
+- 🤖 **Intelligent AI Assistant**: Contextually-aware chatbot powered by OpenAI's GPT models
+- 🔍 **Vector Search**: Pinecone-powered knowledge base for precise information retrieval
+- 📝 **Content Management**: Secure admin panel for real-time knowledge base updates
+- 📄 **Resume System**: Automated resume management with AWS S3 integration
+- 📧 **Contact System**: Streamlined communication through secure email integration
+- 🔐 **Enhanced Security**: JWT authentication and comprehensive API protection
+- 💫 **Responsive Design**: Modern UI with smooth animations
+- 🔄 **High Availability**: Automated server monitoring and keep-alive system
 
 ## Technology Stack
 
 ### Frontend
-- React
-- Styled Components
-- Framer Motion
+- React with Vite
+- Styled Components for modular styling
+- Framer Motion for fluid animations
 - React Icons
+- ESLint for code quality
 
 ### Backend
 - Node.js & Express
 - MongoDB with Mongoose
-- OpenAI API
+- OpenAI API Integration
 - Pinecone Vector Database
-- AWS S3
-- JSON Web Tokens (JWT)
-- Nodemailer
+- AWS S3 for document storage
+- JWT-based authentication
+- Nodemailer for email handling
+- Winston for logging
 
 ## Project Structure
 
 ```
 portfolio-project/
-├── portfolio-frontend/     # React frontend application
+├── portfolio-frontend/     # React frontend
 │   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── styles/         # Styled components
-│   │   └── hooks/          # Custom React hooks
-│   └── public/             # Static assets
+│   │   ├── components/    # UI components
+│   │   ├── sections/      # Page sections
+│   │   ├── hooks/        # Custom React hooks
+│   │   └── styles/       # Styled components
+│   └── public/           # Static assets
 │
-└── portfolio-ai-api/       # Node.js backend server
-    ├── controller/         # Route controllers
-    ├── middleware/         # Express middleware
-    ├── models/             # Mongoose models
-    ├── routes/             # API routes
-    ├── utils/              # Utility functions
-    └── logs/               # Activity logs
+└── portfolio-ai-api/      # Node.js backend
+    ├── config/           # Configuration files
+    ├── controller/       # Route controllers
+    ├── middleware/       # Express middleware
+    ├── models/          # Database models
+    ├── routes/          # API endpoints
+    ├── utils/           # Utility functions
+    └── data/           # Knowledge base data
 ```
 
 ## Setup and Installation
@@ -114,17 +118,16 @@ node index.js
 ## Features in Detail
 
 ### AI Assistant
-- Natural language understanding using OpenAI's GPT models
-- Context-aware responses about your background, skills, and projects
-- Category-based knowledge retrieval
-- Fallback to semantic search for comprehensive responses
+- Natural language processing with GPT models
+- Context-aware responses about professional background
+- Vector-based semantic search for accurate information retrieval
+- Intelligent resume-related query handling
 
-### Admin Panel
-- Triple-click the logo to access admin login
-- Content management features:
-  - Add/Update/Delete knowledge entries
-  - Upload and manage resume
-  - Track content changes through activity logs
+### Admin Dashboard
+- Secure triple-click access mechanism
+- Real-time knowledge base management
+- Activity logging and monitoring
+- Resume upload and management
 
 ### Contact System
 - Secure email forwarding
@@ -136,12 +139,11 @@ node index.js
 - Cost-efficient API warm-up functionality
 - Monitoring endpoint that checks server and database health
 
-## Security Features
-
-- API key authentication for endpoints
-- JWT-based admin authentication
-- Secure file uploads with type verification
-- CORS protection
+### Security Implementation
+- API key authentication
+- JWT-based admin access
+- Secure file handling
+- Rate limiting and CORS protection
 - Environment variable security
 
 ## Deployment
