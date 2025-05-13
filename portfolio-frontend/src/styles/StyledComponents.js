@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 export const StyledHeader = styled.header`
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 11;
-  padding: 0px 50px;
   width: 100%;
   height: 70px;
   background-color: rgba(10, 25, 47, 0.85);
@@ -14,25 +14,44 @@ export const StyledHeader = styled.header`
   filter: none !important;
   pointer-events: auto !important;
   user-select: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+
+  @media (min-width: 1920px) {
+    padding: 0 150px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 25px;
+  }
 `
 
 export const Nav = styled.nav`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: relative;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   color: var(--lightest-slate);
   font-family: var(--font-mono);
   counter-reset: item 0;
   z-index: 12;
-  height: 40px;
+  height: 100%;
+  justify-content: space-between;
 `
 
 export const NavLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: clamp(20px, 2vw, 30px);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
     display: none;
@@ -50,11 +69,22 @@ export const NavLink = styled.a`
 
 export const SocialLinks = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  margin-left: 60px;
+  align-items: center;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 
   a {
     color: var(--lightest-slate);
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    padding: 10px;
     
     &:hover {
       color: var(--green);
@@ -235,3 +265,11 @@ export const LogoText = styled.text.attrs({
   textAnchor: "middle",
   dominantBaseline: "middle"
 })``;
+
+export const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  min-width: fit-content;
+  position: relative;
+  z-index: 3;
+`
