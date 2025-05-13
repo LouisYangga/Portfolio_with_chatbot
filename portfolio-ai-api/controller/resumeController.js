@@ -56,11 +56,10 @@ async function generateResumeUrl() {
   if (!resume) {
     throw new Error("Resume not found.");
   }
-
   const downloadCommand = new GetObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
     Key: resume.fileName,
-    ResponseContentDisposition: `inlined; filename="${resume.fileName}"`,
+    ResponseContentDisposition: `inline; filename="${resume.fileName}"`,
   });
 
   return getSignedUrl(s3, downloadCommand, { expiresIn: 60 });
