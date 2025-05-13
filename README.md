@@ -1,17 +1,30 @@
-# Portfolio with AI Assistant
+# AI-Powered Portfolio Assistant
 
-A modern, interactive portfolio website featuring an AI-powered chatbot assistant. This project showcases a seamless integration of React frontend with a Node.js backend, delivering an engaging user experience through AI-driven conversations, dynamic content management, and professional resume presentation.
+Welcome to my next-generation portfolio featuring an advanced AI assistant that combines OpenAI's GPT models with vector search capabilities. Unlike traditional static portfolios, this project demonstrates the power of AI-driven interactions while showcasing my professional experience and technical skills.
 
-## Key Features
+## 🤖 AI Features Showcase
 
-- 🤖 **Intelligent AI Assistant**: Contextually-aware chatbot powered by OpenAI's GPT models
-- 🔍 **Vector Search**: Pinecone-powered knowledge base for precise information retrieval
-- 📝 **Content Management**: Secure admin panel for real-time knowledge base updates
-- 📄 **Resume System**: Automated resume management with AWS S3 integration
-- 📧 **Contact System**: Streamlined communication through secure email integration
-- 🔐 **Enhanced Security**: JWT authentication and comprehensive API protection
-- 💫 **Responsive Design**: Modern UI with smooth animations
-- 🔄 **High Availability**: Automated server monitoring and keep-alive system
+### Intelligent Assistant
+- **Natural Conversations**: Engage in meaningful discussions about my background, skills, and projects
+- **Context-Aware Responses**: The AI maintains conversation context for more natural interactions
+- **Smart Resume Handling**: Automatically processes resume requests with secure download links
+- **Vector-Based Knowledge**: Uses Pinecone for accurate information retrieval and responses
+
+### How It Works
+```
+User Query → Context Analysis → Vector Search → GPT Processing → Smart Response
+```
+
+- **Query Processing**: Advanced natural language understanding
+- **Vector Search**: Semantic matching using Pinecone database
+- **Context Management**: Real-time knowledge base updates
+- **Security**: Protected routes and secure file handling
+
+### AI Architecture
+- OpenAI GPT models for natural language processing
+- Pinecone vector database for semantic search
+- MongoDB for dynamic knowledge management
+- AWS S3 for secure document handling
 
 ## Technology Stack
 
