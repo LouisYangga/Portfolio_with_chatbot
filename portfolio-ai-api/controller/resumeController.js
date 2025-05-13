@@ -60,7 +60,7 @@ async function generateResumeUrl() {
   const downloadCommand = new GetObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
     Key: resume.fileName,
-    ResponseContentDisposition: `attachment; filename="${resume.fileName}"`,
+    ResponseContentDisposition: `inlined; filename="${resume.fileName}"`,
   });
 
   return getSignedUrl(s3, downloadCommand, { expiresIn: 60 });
@@ -80,9 +80,13 @@ export const downloadResume = async (req, res) => {
 // Download resume - Chat handler
 export const getResumeUrl = async () => {
   try {
+    const resume = await Resume.findOne().sort({ uploadedAt: -1 });
+    if (!resume) {
+      throw new Error('No resume found');
+    }
     return await generateResumeUrl();
   } catch (error) {
-    console.error("Download error:", error);
+    console.error('Error getting resume URL:', error);
     throw error;
   }
 };

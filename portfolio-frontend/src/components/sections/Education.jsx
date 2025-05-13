@@ -78,7 +78,17 @@ const Education = () => {
       if (!response.ok) throw new Error('Failed to get download link');
       
       const data = await response.json();
-      window.open(data.downloadUrl, '_blank');
+      
+      // Create a temporary anchor element
+      const link = document.createElement('a');
+      link.href = data.downloadUrl; 
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
+      // Append to document, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error('Error downloading resume:', error);
     } finally {
