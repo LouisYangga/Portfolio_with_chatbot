@@ -15,7 +15,7 @@ export async function askQuestionHandler(req, res) {
       const url = await getResumeUrl();
       // Return answer with hyperlink format
       return res.json({
-        answer: `Louis would be happy to share his resume with you. [download resume](${url})`
+        answer: `Absolutely! You can view or download Louis' resume [here](${url}).`
       });
     } catch (error) {
       console.error('Resume download error:', error);
