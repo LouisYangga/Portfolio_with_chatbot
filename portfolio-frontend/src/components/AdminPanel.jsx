@@ -203,7 +203,7 @@ const AdminPanel = ({ token }) => {
           <TextArea
             value={knowledgeJson}
             onChange={(e) => setKnowledgeJson(e.target.value)}
-            placeholder="Enter knowledge JSON..."
+            placeholder="Enter knowledge JSON... (e.g. content, category, id)"
           />
           <Button onClick={handleKnowledgeAdd}>
             <FiPlus /> Add Knowledge
