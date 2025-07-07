@@ -204,6 +204,8 @@ export const WorkSection = styled(Section)`
 `
 
 export const DemoSection = styled(Section)`
+  padding-top: 2px;
+
   .section-description {
     color: var(--slate);
     font-size: var(--fz-lg);
