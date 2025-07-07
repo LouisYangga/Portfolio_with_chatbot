@@ -9,7 +9,7 @@ const Work = () => {
       description: 'A modern, responsive portfolio site built using React and an integrated AI assistant for interactive user engagement. The backend is powered by Node.js, enabling scalable support for chatbot functionality and content management.',
       tech: ['React', 'Node.js', 'Framer Motion', 'Styled Components', 'PineCone', 'OpenAI', 'AWS S3','MongoDB'],
       github: 'https://github.com/LouisYangga/Portfolio_with_chatbot',
-      external: 'https://louisyangga.com',
+      external: '#chatbot',
     },
     {
       title: 'Multi Label Classification',
@@ -28,9 +28,20 @@ const Work = () => {
       description: 'A modular education platform backend built with Node.js and microservices architecture. Features independent services for admissions, user management, enrollment, and academic advising. Uses Docker for containerization, MongoDB for data persistence, and RESTful APIs with event-driven communication between services.',
       tech: ['Node.js', 'Express.js', 'Docker', 'MongoDB', 'Microservices', 'Mongoose'],
       github: 'https://github.com/LouisYangga/Microservices',
+    },
+    {
+      title: 'Illawarra Cleaning Services Booking System',
+      description: 'A booking system for Illawarra Cleaning Services with Microservices architecture. The system allows users to book cleaning services and view the status of their bookings. The system is built with Spring Boot, Spring Data JPA, AMQP, Docker, and PostgreSQL.',
+      tech: ['Spring Boot', 'Spring Data JPA', 'AMQP', 'Docker', 'PostgreSQL'],
+      github: 'https://github.com/LouisYangga/IllawarraCleaning_backend',
+    },
+    {
+      title: 'Onboarding Automation',
+      description: 'Onboarding automation simulation for new employees. The system is built with Node.js, MongoDB, Express.js, and n8n. It create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department.',
+      tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
+      github: 'https://github.com/LouisYangga/OnboardingAutomation',
+      external: '#demo',
     }
-    
-    // Add more projects as needed
   ]
 
   return (
@@ -61,7 +72,7 @@ const Work = () => {
                     </a>
                   )}
                   {project.external && (
-                    <a href={project.external} target="_blank" rel="noopener noreferrer">
+                    <a href={project.external} target={project.external.startsWith('#') ? '_self' : '_blank'} rel={project.external.startsWith('#') ? '' : 'noopener noreferrer'}>
                       <FiExternalLink />
                     </a>
                   )}

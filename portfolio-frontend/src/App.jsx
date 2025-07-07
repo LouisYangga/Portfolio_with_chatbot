@@ -62,7 +62,7 @@ function App() {
             <NavLink href="#about">About</NavLink>
             <NavLink href="#education">Education</NavLink>
             <NavLink href="#work">Work</NavLink>
-            <NavLink href="#demo">Demo</NavLink>
+            <NavLink href="#demo">Demo(s)</NavLink>
             <NavLink href="#contact">Contact</NavLink>
             {/* Logout button removed from here - now in AdminPanel */}
           </NavLinks>

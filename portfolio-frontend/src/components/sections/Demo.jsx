@@ -18,7 +18,7 @@ const Demo = () => {
     },
     {
       title: 'Onboarding Automation',
-      description: 'Onboarding automation for new employees. This project automates the onboarding process for new employees by sending them a welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department. The project uses Node.js, MongoDB, Express.js, and n8n.',
+      description: 'Onboarding automation for new employees. This project automates the onboarding process for new employees by  create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department. The project uses Node.js, MongoDB, Express.js, and n8n.',
       tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
       github: 'https://github.com/LouisYangga/OnboardingAutomation',
       demoUrl: '#',
@@ -26,7 +26,7 @@ const Demo = () => {
     },
   ]
 
-  const handleDemoClick = (demoUrl) => {
+  const handleDemoClick = (demoUrl) => {  
     if (demoUrl === '#chatbot') {
       // Scroll to chatbot section
       const chatbotSection = document.getElementById('chatbot')
