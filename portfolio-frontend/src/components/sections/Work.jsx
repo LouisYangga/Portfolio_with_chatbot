@@ -12,6 +12,13 @@ const Work = () => {
       external: '#chatbot',
     },
     {
+      title: 'Onboarding Automation',
+      description: 'Onboarding automation simulation for new employees. The system is built with Node.js, MongoDB, Express.js, and n8n. It create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department.',
+      tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
+      github: 'https://github.com/LouisYangga/OnboardingAutomation',
+      external: '#demo',
+    },
+    {
       title: 'Multi Label Classification',
       description: 'Refined a pre-trained RoBERTa model for multi-label classification of news articles across 8 categories, using a balanced dataset of 10,000 samples per class. Initially developed for single-label classification, the project transitioned to multi-label after identifying overlapping topic predictions during error analysis.',
       tech: ['Python', 'PyTorch', 'Hugging Face Transformer', 'Pandas', 'NumPy'],
@@ -35,13 +42,6 @@ const Work = () => {
       tech: ['Spring Boot', 'Spring Data JPA', 'AMQP', 'Docker', 'PostgreSQL'],
       github: 'https://github.com/LouisYangga/IllawarraCleaning_backend',
     },
-    {
-      title: 'Onboarding Automation',
-      description: 'Onboarding automation simulation for new employees. The system is built with Node.js, MongoDB, Express.js, and n8n. It create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department.',
-      tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
-      github: 'https://github.com/LouisYangga/OnboardingAutomation',
-      external: '#demo',
-    }
   ]
 
   return (
