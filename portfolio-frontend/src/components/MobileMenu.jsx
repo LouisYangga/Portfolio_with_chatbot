@@ -16,6 +16,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
         <a href="#about" onClick={onClose}>About</a>
         <a href="#education" onClick={onClose}>Education</a>
         <a href="#work" onClick={onClose}>Work</a>
+        <a href="#demo" onClick={onClose}>Demo</a>
         <a href="#contact" onClick={onClose}>Contact</a>
       </nav>
       <div className="mobile-social-links">

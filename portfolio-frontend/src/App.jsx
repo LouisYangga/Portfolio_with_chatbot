@@ -6,6 +6,7 @@ import Chatbot from './components/sections/Chatbot'
 import About from './components/sections/About'
 import Work from './components/sections/Work'
 import Contact from './components/sections/Contact'
+import Demo from './components/sections/Demo'
 import MobileMenu from './components/MobileMenu'
 import Education from './components/sections/Education'
 import AdminModal from './components/AdminModal'
@@ -61,6 +62,7 @@ function App() {
             <NavLink href="#about">About</NavLink>
             <NavLink href="#education">Education</NavLink>
             <NavLink href="#work">Work</NavLink>
+            <NavLink href="#demo">Demo</NavLink>
             <NavLink href="#contact">Contact</NavLink>
             {/* Logout button removed from here - now in AdminPanel */}
           </NavLinks>
@@ -95,6 +97,9 @@ function App() {
         </section>
         <section id="work">
           <Work />
+        </section>
+        <section id="demo">
+          <Demo />
         </section>
         <section id="contact">
           <Contact />

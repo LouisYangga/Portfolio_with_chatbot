@@ -203,6 +203,127 @@ export const WorkSection = styled(Section)`
   }
 `
 
+export const DemoSection = styled(Section)`
+  .section-description {
+    color: var(--slate);
+    font-size: var(--fz-lg);
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  .demos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .demo-card {
+    position: relative;
+    cursor: default;
+    background-color: var(--light-navy);
+    padding: 2rem 1.75rem;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: var(--green);
+    }
+  }
+
+  .demo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .demo-icon {
+    color: var(--green);
+    font-size: 1.5rem;
+  }
+
+  .demo-links {
+    display: flex;
+    gap: 10px;
+
+    a {
+      color: var(--slate);
+      font-size: 1.2rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--green);
+      }
+    }
+  }
+
+  .demo-title {
+    font-size: var(--fz-lg);
+    margin-bottom: 1rem;
+    color: var(--lightest-slate);
+  }
+
+  .demo-description {
+    color: var(--slate);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    text-align: justify;
+  }
+
+  .demo-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .tech-tag {
+    background-color: var(--green);
+    color: var(--navy);
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: var(--fz-xs);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .demo-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: transparent;
+    border: 1px solid var(--green);
+    border-radius: 4px;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+    margin-top: auto;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(100,255,218,0.1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .demos-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+`
+
 export const ContactSection = styled(Section)`
   max-width: 600px;
   margin: 0 auto;
