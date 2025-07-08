@@ -12,7 +12,11 @@ const About = () => {
     'MongoDB & PostgreSQL',
     'Git & Docker',
     'AWS',
-    'Machine Learning'
+    'Machine Learning',
+    'n8n',
+    'RABBITMQ',
+    'OpenAI API',
+    'Pinecone'
   ]
 
   return (

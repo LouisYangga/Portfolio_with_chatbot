@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiPlay, FiCode } from 'react-icons/fi'
 import { DemoSection } from '../../styles/SectionStyles'
 
-const Demo = () => {
+const Demo = ({ onPageChange }) => {
   const [activeDemo, setActiveDemo] = useState(0)
 
   const demos = [
@@ -12,8 +12,8 @@ const Demo = () => {
       description: 'Interactive AI-powered chatbot that can answer questions about my background, skills, and projects. Built with OpenAI API and integrated with PineCone for knowledge retrieval.',
       tech: ['React', 'Node.js', 'OpenAI API', 'PineCone', 'Styled Components'],
       github: 'https://github.com/LouisYangga/Portfolio_with_chatbot',
-      live: 'https://louisyangga.com',
-      demoUrl: '#chatbot',
+      live: 'https://louisyangga.com/#chatbot',
+      demoUrl: '/#chatbot',
       icon: <FiPlay />
     },
     {
@@ -21,20 +21,23 @@ const Demo = () => {
       description: 'Onboarding automation for new employees. This project automates the onboarding process for new employees by  create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department. The project uses Node.js, MongoDB, Express.js, and n8n.',
       tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
       github: 'https://github.com/LouisYangga/OnboardingAutomation',
-      demoUrl: '#',
+      demoUrl: 'onboarding',
       icon: <FiPlay />
     },
   ]
 
   const handleDemoClick = (demoUrl) => {  
-    if (demoUrl === '#chatbot') {
+    if (demoUrl === '/#chatbot') {
       // Scroll to chatbot section
       const chatbotSection = document.getElementById('chatbot')
       if (chatbotSection) {
         chatbotSection.scrollIntoView({ behavior: 'smooth' })
       }
+    } else if (demoUrl === 'onboarding') {
+      // Open onboarding demo page
+      onPageChange('onboarding-demo')
     } else if (demoUrl !== '#') {
-      // For external demos, you can add logic here
+      // For external demos
       console.log('Demo URL:', demoUrl)
     }
   }
@@ -89,17 +92,30 @@ const Demo = () => {
                 ))}
               </div>
               
-              <button 
-                className="demo-button"
-                onClick={() => handleDemoClick(demo.demoUrl)}
-                disabled={demo.demoUrl === '#'}
-              >
-                {demo.demoUrl === '#chatbot' ? 'Try Chatbot' : 'Launch Demo'}
-              </button>
+              {demo.demoUrl === 'onboarding' ? (
+                <a
+                  className="demo-button"
+                  href="/onboarding-demo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textAlign: 'center' }}
+                >
+                  Launch Demo
+                </a>
+              ) : (
+                <button 
+                  className="demo-button"
+                  onClick={() => handleDemoClick(demo.demoUrl)}
+                  disabled={demo.demoUrl === '#'}
+                >
+                  {demo.demoUrl === '/#chatbot' ? 'Try Chatbot' : 'Launch Demo'}
+                </button>
+              )}
             </motion.div>
           ))}
         </div>
       </motion.div>
+      
     </DemoSection>
   )
 }
