@@ -64,7 +64,7 @@ function App() {
       <div className="app">
         <StyledHeader>
           <Nav>
-            <LogoLink href="#home" aria-label="home" onClick={handleLogoClick}>
+            <LogoLink href="/#home" aria-label="home" onClick={handleLogoClick}>
               <LogoSVG id="logo">
                 <LogoRect className="logo-border" />
                 <LogoText className="logo-text">
