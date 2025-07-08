@@ -43,10 +43,12 @@ const OnboardingDemoPage = ({ onClose }) => {
     logsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Remove auto-scroll behavior - let the terminal handle its own scrolling
-  // useEffect(() => {
-  //   scrollToBottom()
-  // }, [logs])
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+
 
   const addLog = (message, type = 'info') => {
     const timestamp = new Date().toLocaleTimeString()
