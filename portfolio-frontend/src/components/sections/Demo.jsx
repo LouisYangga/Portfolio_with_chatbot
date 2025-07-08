@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiPlay, FiCode } from 'react-icons/fi'
 import { DemoSection } from '../../styles/SectionStyles'
+import { useNavigate } from 'react-router-dom'
 
 const Demo = ({ onPageChange }) => {
   const [activeDemo, setActiveDemo] = useState(0)
+  const navigate = useNavigate()
 
   const demos = [
     {
@@ -93,15 +95,13 @@ const Demo = ({ onPageChange }) => {
               </div>
               
               {demo.demoUrl === 'onboarding' ? (
-                <a
+                <button
                   className="demo-button"
-                  href="/onboarding-demo"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => navigate('/onboarding-demo')}
                   style={{ textAlign: 'center' }}
                 >
                   Launch Demo
-                </a>
+                </button>
               ) : (
                 <button 
                   className="demo-button"
