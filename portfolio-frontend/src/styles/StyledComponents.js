@@ -291,3 +291,59 @@ export const LogoContainer = styled.div`
   position: relative;
   z-index: 3;
 `
+
+export const OnboardingInput = styled.input`
+  width: 70%;
+  padding: 12px 16px;
+  background-color:rgb(18, 34, 56);
+  color: white;
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s ease;
+  margin-bottom: 10px;
+  &:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+`
+
+export const OnboardingSelect = styled.select`
+  width: 70%;
+  padding: 12px 16px;
+  background-color:rgb(18, 34, 56);
+  color: white;
+  border: 1px solidrgb(18, 34, 56);
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+
+  option {
+    background-color:rgb(18, 34, 56);
+    color: white;
+  }
+`
+
+export const OnboardingLabel = styled.label`
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color:rgb(184, 189, 197);
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  svg {
+    margin-right: 8px;
+  }
+`
