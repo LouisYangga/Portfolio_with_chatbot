@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { FiMenu, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { MainContent, StyledHeader, Nav, NavLinks, NavLink, SocialLinks, HamburgerButton, LogoLink, LogoSVG, LogoRect, LogoText } from './styles/StyledComponents'
 import Hero from './components/sections/Hero'
@@ -74,13 +74,13 @@ function App() {
             </LogoLink>
 
             <NavLinks>
-              <NavLink href="/#home">Home</NavLink>
-              <NavLink href="/#chatbot">AI Assistant</NavLink>
-              <NavLink href="/#about">About</NavLink>
-              <NavLink href="/#education">Education</NavLink>
-              <NavLink href="/#work">Work</NavLink>
-              <NavLink href="/#demo">Demo(s)</NavLink>
-              <NavLink href="/#contact">Contact</NavLink>
+              <NavLink href="#home">Home</NavLink>
+              <NavLink href="#chatbot">AI Assistant</NavLink>
+              <NavLink href="#about">About</NavLink>
+              <NavLink href="#education">Education</NavLink>
+              <NavLink href="#work">Work</NavLink>
+              <NavLink href="#demo">Demo(s)</NavLink>
+              <NavLink href="#contact">Contact</NavLink>
             </NavLinks>
             
 
