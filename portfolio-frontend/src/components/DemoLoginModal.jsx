@@ -9,11 +9,14 @@ import {
   Input,
   SubmitButton,
   StatusMessage
-} from '../styles/AdminStyles'
+} from '../styles/DemoStyles'
+import UserDashboardModal from './UserDashboardModal'
 
 const ONBOARDING_API_URL = import.meta.env.VITE_ONBOARDING_API;
 
 const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,6 +29,8 @@ const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
     if (!isOpen) {
       setFormData({ email: '', password: '' });
       setSubmitStatus({ type: '', message: '' });
+      setShowDashboard(false);
+      setUserEmail('');
     }
   }, [isOpen]);
 
@@ -51,18 +56,11 @@ const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
         throw new Error(data.error || 'Demo login failed');
       }
 
-      localStorage.setItem('demoToken', data.token);
-      onLogin(data.token);
+      setUserEmail(formData.email);
+      onLogin(data);
       
-      setSubmitStatus({
-        type: 'success',
-        message: 'Demo login successful!'
-      });
-      
-      setTimeout(() => {
-        onClose();
-        setSubmitStatus({ type: '', message: '' });
-      }, 1500);
+      setShowDashboard(true);
+      setSubmitStatus({ type: '', message: '' });
 
     } catch (error) {
       setSubmitStatus({
@@ -82,56 +80,67 @@ const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <ModalOverlay
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <ModalContent
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            onClick={e => e.stopPropagation()}
+    <>
+      <AnimatePresence>
+        {isOpen && !showDashboard && (
+          <ModalOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
           >
-            <CloseButton onClick={onClose}>
-              <FiX size={24} />
-            </CloseButton>
-            <h2 style={{ marginBottom: '1.5rem', color: 'var(--lightest-slate)' }}>Demo Login</h2>
-            {submitStatus.message && (
-              <StatusMessage $type={submitStatus.type}>
-                {submitStatus.message}
-              </StatusMessage>
-            )}
-            <Form onSubmit={handleSubmit}>
-              <Input
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                disabled={isSubmitting}
-              />
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                disabled={isSubmitting}
-              />
-              <SubmitButton type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Logging in...' : 'Login'}
-              </SubmitButton>
-            </Form>
-          </ModalContent>
-        </ModalOverlay>
-      )}
-    </AnimatePresence>
+            <ModalContent
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              onClick={e => e.stopPropagation()}
+            >
+              <CloseButton onClick={onClose}>
+                <FiX size={24} />
+              </CloseButton>
+              <h2 style={{ marginBottom: '1.5rem', color: 'var(--lightest-slate)' }}>Demo Login</h2>
+              {submitStatus.message && (
+                <StatusMessage $type={submitStatus.type}>
+                  {submitStatus.message}
+                </StatusMessage>
+              )}
+              <Form onSubmit={handleSubmit}>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                />
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={isSubmitting}
+                />
+                <SubmitButton type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Logging in...' : 'Login'}
+                </SubmitButton>
+              </Form>
+            </ModalContent>
+          </ModalOverlay>
+        )}
+      </AnimatePresence>
+
+      <UserDashboardModal
+        isOpen={showDashboard}
+        onClose={() => {
+          setShowDashboard(false);
+          onClose();
+        }}
+        userEmail={userEmail}
+      />
+    </>
   );
 };
 
