@@ -45,6 +45,13 @@ User Query → Context Analysis → Vector Search → GPT Processing → Smart R
 - Nodemailer for email handling
 - Winston for logging
 
+### Demo System
+- Socket.IO for real-time communication
+- WebSocket integration for live updates
+- User authentication system
+- Real-time log processing
+- Dashboard management interface
+
 ## Project Structure
 
 ```
@@ -52,9 +59,16 @@ portfolio-project/
 ├── portfolio-frontend/     # React frontend
 │   ├── src/
 │   │   ├── components/    # UI components
+│   │   │   ├── DemoLoginModal.jsx      # Demo login modal
+│   │   │   ├── UserDashboardModal.jsx  # User dashboard
+│   │   │   ├── OnboardingDemoPage.jsx  # Demo page
+│   │   │   ├── OnboardingDemoForm.jsx  # Demo form
+│   │   │   └── OnboardingDemoLogs.jsx  # Live logs display
 │   │   ├── sections/      # Page sections
 │   │   ├── hooks/        # Custom React hooks
 │   │   └── styles/       # Styled components
+│   │       ├── AdminStyles.js    # Admin styling
+│   │       └── DemoStyles.js     # Demo-specific styling
 │   └── public/           # Static assets
 │
 └── portfolio-ai-api/      # Node.js backend
@@ -94,6 +108,8 @@ Frontend (.env):
 ```
 VITE_API_KEY=your_api_key
 VITE_API_URL=your_backend_url
+VITE_ONBOARDING_API=your_onboarding_api_url
+VITE_ONBOARDING_API_KEY=your_onboarding_api_key
 ```
 
 Backend (.env):
@@ -135,6 +151,24 @@ node index.js
 - Context-aware responses about professional background
 - Vector-based semantic search for accurate information retrieval
 - Intelligent resume-related query handling
+
+### Interactive Demo Section
+- **Onboarding Automation Demo**: Live simulation of employee onboarding process
+  - Real-time form processing with Socket.IO integration
+  - Live terminal-style logs showing process steps
+  - User authentication with email/password login
+  - User dashboard with password management and activity logs
+  - Responsive design with modern UI components
+
+#### Demo Features:
+- **Real-time Processing**: Live updates via WebSocket connections
+- **User Authentication**: Secure login system with demo credentials
+- **Dashboard Access**: Post-login user dashboard with:
+  - Password update functionality
+  - Activity log retrieval and display
+  - Real-time status updates
+- **Process Simulation**: Complete onboarding workflow simulation
+- **Error Handling**: Comprehensive error management and user feedback
 
 ### Admin Dashboard
 - Secure triple-click access mechanism
