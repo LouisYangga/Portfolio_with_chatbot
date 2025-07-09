@@ -11,11 +11,11 @@ import {
   StatusMessage
 } from '../styles/AdminStyles'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const ONBOARDING_API_URL = import.meta.env.VITE_ONBOARDING_API;
 
 const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,7 +24,7 @@ const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
   // Reset form data when modal closes
   useEffect(() => {
     if (!isOpen) {
-      setFormData({ username: '', password: '' });
+      setFormData({ email: '', password: '' });
       setSubmitStatus({ type: '', message: '' });
     }
   }, [isOpen]);
@@ -36,11 +36,11 @@ const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
     
     try {
       // Use a different API endpoint for demo login
-      const response = await fetch(`${API_URL}/api/demo-login`, {
+      const response = await fetch(`${ONBOARDING_API_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': import.meta.env.VITE_API_KEY
+          'x-api-key': import.meta.env.VITE_ONBOARDING_API_KEY
         },
         body: JSON.stringify(formData)
       });
@@ -107,11 +107,11 @@ const DemoLoginModal = ({ isOpen, onClose, onLogin }) => {
             )}
             <Form onSubmit={handleSubmit}>
               <Input
-                type="text"
-                name="username"
-                placeholder="Username"
+                type="email"
+                name="email"
+                placeholder="Email"
                 required
-                value={formData.username}
+                value={formData.email}
                 onChange={handleChange}
                 disabled={isSubmitting}
               />
