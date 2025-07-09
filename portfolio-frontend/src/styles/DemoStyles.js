@@ -34,7 +34,6 @@ export const DashboardSection = styled.div`
 export const SectionTitle = styled.h3`
   color: var(--lightest-slate);
   margin-bottom: 1rem;
-  margin: 0;
 `
 
 export const LogsContainer = styled.div`
