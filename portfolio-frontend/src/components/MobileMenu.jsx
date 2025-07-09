@@ -7,7 +7,7 @@ const sectionLinks = [
   { id: 'about', label: 'About' },
   { id: 'education', label: 'Education' },
   { id: 'work', label: 'Work' },
-  { id: 'demo', label: 'Demo' },
+  { id: 'demo', label: 'Demo(s)' },
   { id: 'contact', label: 'Contact' },
 ];
 
