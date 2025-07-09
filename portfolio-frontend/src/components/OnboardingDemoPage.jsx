@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import OnboardingDemoForm from './OnboardingDemoForm';
 import OnboardingDemoLogs from './OnboardingDemoLogs';
+import DemoLoginModel from './DemoLoginModal';
+import { SubmitButton } from '../styles/AdminStyles';
 import { io } from 'socket.io-client';
 
 const FullWidthContainer = styled.div`
@@ -32,6 +34,7 @@ const OnboardingDemoPage = ({ onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [logs, setLogs] = useState([])
   const [isConnected, setIsConnected] = useState(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const logsEndRef = useRef(null)
   const logsSectionRef = useRef(null)
 
@@ -88,7 +91,7 @@ const OnboardingDemoPage = ({ onClose }) => {
     try {
       // Call the onboarding API
       const apiKey = import.meta.env.VITE_ONBOARDING_API_KEY;
-      const response = await fetch('https://onboardingautomation.onrender.com/api/start-onboarding', {
+      const response = await fetch(`${ONBOARDING_API_URL}/api/start-onboarding`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey },
         body: JSON.stringify(payload),
@@ -111,7 +114,7 @@ const OnboardingDemoPage = ({ onClose }) => {
       addLog('Onboarding process started. Listening for updates...', 'success');
 
       // Connect to Socket.IO server
-      const socket = io('https://onboardingautomation.onrender.com');
+      const socket = io(`${ONBOARDING_API_URL}`);
       
       socket.on('connect', () => {
         setIsConnected(true);
@@ -180,6 +183,11 @@ const OnboardingDemoPage = ({ onClose }) => {
     }
   }
 
+  const handleLogin = (token) => {
+    console.log('Login successful:', token);
+    // You can add additional logic here for what happens after login
+  }
+
   return (
     <FullWidthContainer>
       <Section id="onboarding-demo">
@@ -188,11 +196,19 @@ const OnboardingDemoPage = ({ onClose }) => {
             <div className="flex items-center gap-4 mb-4 md:mb-0">
               <div style={{ width: 44, height: 44 }}></div>
               <div>
-                <h1 className="text-3xl font-bold text-navy-900">Onboarding Automation Demo</h1>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <h1 className="text-3xl font-bold text-navy-900">Onboarding Automation Demo</h1>
+                  <SubmitButton
+                    type="button"
+                    onClick={() => setIsLoginModalOpen(true)}
+                  >
+                    Login
+                  </SubmitButton>
+                </div>
                 <p className="text-gray-500">Simulate the employee onboarding process</p>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-4">
               <span
                 style={{
                   color: isConnected ? '#22c55e' : '#ef4444',
@@ -224,6 +240,12 @@ const OnboardingDemoPage = ({ onClose }) => {
           </div>
         </div>
       </Section>
+      
+      <DemoLoginModel 
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onLogin={handleLogin}
+      />
     </FullWidthContainer>
   )
 }
