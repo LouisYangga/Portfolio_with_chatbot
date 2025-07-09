@@ -46,6 +46,7 @@ User Query → Context Analysis → Vector Search → GPT Processing → Smart R
 - Winston for logging
 
 ### Demo System
+#### Onboarding Automation
 - Socket.IO for real-time communication
 - WebSocket integration for live updates
 - User authentication system
