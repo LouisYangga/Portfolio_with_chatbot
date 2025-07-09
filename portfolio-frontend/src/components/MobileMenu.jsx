@@ -1,5 +1,6 @@
 import { FiX, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { MobileMenu as StyledMobileMenu } from '../styles/StyledComponents'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const sectionLinks = [
   { id: 'chatbot', label: 'AI Assistant' },
@@ -11,6 +12,22 @@ const sectionLinks = [
 ];
 
 const MobileMenu = ({ isOpen, onClose }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleMenuClick = (id) => {
+    if (location.pathname !== '/') {
+      // Go to home with hash, let ScrollToHash handle the scroll
+      navigate(`/#${id}`);
+      onClose();
+    } else {
+      // Already on home, do smooth scroll
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      onClose();
+    }
+  };
+
   return (
     <StyledMobileMenu
       initial={{ x: '100%' }}
@@ -27,9 +44,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
             href={`#${link.id}`}
             onClick={e => {
               e.preventDefault();
-              const el = document.getElementById(link.id);
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-              onClose();
+              handleMenuClick(link.id);
             }}
           >
             {link.label}
