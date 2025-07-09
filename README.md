@@ -201,7 +201,7 @@ The application is deployed as two separate services:
    - Configure environment variables in the hosting platform dashboard
    - Set `VITE_API_URL` to your deployed backend URL
 
-2. Backend: Deployed on Render (https://portfolio-with-chatbot.onrender.com)
+2. Backend: Deployed on Render
    - Configure environment variables in the Render dashboard
    - Set up a keep-alive monitor with UptimeRobot to prevent idle timeout
 
