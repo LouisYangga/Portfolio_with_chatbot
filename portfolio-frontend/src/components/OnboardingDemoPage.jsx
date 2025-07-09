@@ -131,7 +131,7 @@ const API_URL = import.meta.env.VITE_API_URL;
           }
           if (data.status === 'finished') {
             addLog('$ Onboarding process finished!', 'success');
-            addLog(`$ User created successfully with temporary password: ${tempPassword}`, 'success');
+            addLog(`$ User created successfully with email: ${data.email} and  temporary password: ${tempPassword}`, 'success');
             setIsSubmitting(false);
             socket.disconnect();
             // Clear the form when finished
