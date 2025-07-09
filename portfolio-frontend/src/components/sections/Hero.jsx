@@ -15,7 +15,7 @@ const Hero = () => {
         <p>
         I'm a passionate software engineer with a strong foundation in full-stack development, machine learning, and user-focused design.
         I enjoy turning complex ideas into scalable, clean code — from APIs to intelligent systems. Currently,
-        I'm building accessible, practical tools and experimenting with AI-powered solutions to improve digital experiences.
+        I'm building accessible, practical tools and experimenting with AI-powered solutions and automation tools to improve digital experiences.
         </p>
         <motion.div
           initial={{ opacity: 0 }}

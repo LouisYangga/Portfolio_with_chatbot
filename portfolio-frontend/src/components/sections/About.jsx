@@ -43,7 +43,8 @@ const About = () => {
 
           <p>
             I’m currently focused on developing scalable backend services, experimenting with ML workflows, 
-            and contributing to accessible, user-first digital products.
+            and contributing to accessible, user-first digital products. I'm also sharpening my skills in System Development
+            and Automation.
           </p>
 
           <p>
