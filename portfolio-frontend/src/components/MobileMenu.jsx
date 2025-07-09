@@ -1,6 +1,15 @@
 import { FiX, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { MobileMenu as StyledMobileMenu } from '../styles/StyledComponents'
 
+const sectionLinks = [
+  { id: 'chatbot', label: 'AI Assistant' },
+  { id: 'about', label: 'About' },
+  { id: 'education', label: 'Education' },
+  { id: 'work', label: 'Work' },
+  { id: 'demo', label: 'Demo' },
+  { id: 'contact', label: 'Contact' },
+];
+
 const MobileMenu = ({ isOpen, onClose }) => {
   return (
     <StyledMobileMenu
@@ -12,12 +21,20 @@ const MobileMenu = ({ isOpen, onClose }) => {
         <FiX />
       </button>
       <nav>
-        <a href="#chatbot" onClick={onClose}>AI Assistant</a>
-        <a href="#about" onClick={onClose}>About</a>
-        <a href="#education" onClick={onClose}>Education</a>
-        <a href="#work" onClick={onClose}>Work</a>
-        <a href="#demo" onClick={onClose}>Demo</a>
-        <a href="#contact" onClick={onClose}>Contact</a>
+        {sectionLinks.map(link => (
+          <a
+            key={link.id}
+            href={`#${link.id}`}
+            onClick={e => {
+              e.preventDefault();
+              const el = document.getElementById(link.id);
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+              onClose();
+            }}
+          >
+            {link.label}
+          </a>
+        ))}
       </nav>
       <div className="mobile-social-links">
         <a href="https://github.com/LouisYangga" target="_blank" rel="noopener noreferrer">
