@@ -6,6 +6,8 @@ import DemoLoginModel from './DemoLoginModal';
 import { SubmitButton } from '../styles/AdminStyles';
 import { io } from 'socket.io-client';
 
+
+const ONBOARDING_API_URL = import.meta.env.VITE_ONBOARDING_API;
 const FullWidthContainer = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -37,7 +39,7 @@ const OnboardingDemoPage = ({ onClose }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const logsEndRef = useRef(null)
   const logsSectionRef = useRef(null)
-
+const API_URL = import.meta.env.VITE_API_URL;
   const scrollToBottom = () => {
     logsEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -161,6 +163,7 @@ const OnboardingDemoPage = ({ onClose }) => {
       });
     } catch (err) {
       addLog('$ Error starting onboarding process', 'error');
+      console.log(err);
       setIsSubmitting(false);
     }
   };
