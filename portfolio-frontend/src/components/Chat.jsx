@@ -20,15 +20,57 @@ const Chat = ({ isOpen, onClose }) => {
   const [error, setError] = useState(null)
   const messagesEndRef = useRef(null)
   const messagesContainerRef = useRef(null)
+  const [sessionId, setSessionId] = useState(null);
+  const [messagesLoaded, setMessagesLoaded] = useState(false);
+
+  // Load messages from session storage on component mount
+  useEffect(() => {
+    let sessionId = sessionStorage.getItem("sessionId");
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      sessionStorage.setItem("sessionId", sessionId);
+    }
+    setSessionId(sessionId);
+
+    // Load saved messages from session storage
+    const savedMessages = sessionStorage.getItem(`chatMessages_${sessionId}`);
+    if (savedMessages) {
+      try {
+        const parsedMessages = JSON.parse(savedMessages);
+        setMessages(parsedMessages);
+      } catch (error) {
+        console.error('Error parsing saved messages:', error);
+        // If parsing fails, start with default message
+        setMessages([{
+          text: "Hi! I'm Louis's AI assistant. I can help you learn more about Louis's experience, skills, and projects. What would you like to know?",
+          isUser: false
+        }]);
+      }
+    } else {
+      // No saved messages, start with default message
+      setMessages([{
+        text: "Hi! I'm Louis's AI assistant. I can help you learn more about Louis's experience, skills, and projects. What would you like to know?",
+        isUser: false
+      }]);
+    }
+    setMessagesLoaded(true);
+  }, []);
+
+  // Save messages to session storage whenever messages change
+  useEffect(() => {
+    if (sessionId && messages.length > 0) {
+      sessionStorage.setItem(`chatMessages_${sessionId}`, JSON.stringify(messages));
+    }
+  }, [messages, sessionId]);
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (isOpen && messages.length === 0 && messagesLoaded) {
       setMessages([{
         text: "Hi! I'm Louis's AI assistant. I can help you learn more about Louis's experience, skills, and projects. What would you like to know?",
         isUser: false
       }])
     }
-  }, [isOpen])
+  }, [isOpen, messagesLoaded])
 
   const adjustScroll = () => {
     if (messagesContainerRef.current) {
@@ -41,10 +83,9 @@ const Chat = ({ isOpen, onClose }) => {
   useEffect(() => {
     adjustScroll();
   }, [messages])
-
-  const renderMessageWithLinks = (text) => {
-    // Special handling for resume view links
-    const resumePattern = /\[click to view resume\]\((.*?)\)/;
+const renderMessageWithLinks = (text) => {
+// Special handling for resume view links
+const resumePattern = /\[click to view resume\]\((.*?)\)/;
     text = text.replace(resumePattern, '<a href="$1" target="_blank" rel="noopener noreferrer">click to view resume</a>');
 
     // Handle other links
@@ -115,7 +156,10 @@ const Chat = ({ isOpen, onClose }) => {
           'Content-Type': 'application/json',
           'x-api-key': import.meta.env.VITE_API_KEY
         },
-        body: JSON.stringify({ question: userInput })
+        body: JSON.stringify({ 
+          question: userInput,
+          sessionId: sessionId
+         })
       })
 
       const data = await response.json()

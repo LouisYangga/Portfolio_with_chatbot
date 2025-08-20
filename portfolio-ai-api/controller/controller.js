@@ -2,11 +2,31 @@ import { addKnowledge, updateKnowledge, getRelevantContext, deleteKnowledge, log
 import connectionManager from "../utils/connections.js";
 import { getResumeUrl } from "./resumeController.js";
 
+
+const shortTermMemory = new Map(); // sessionId -> [{role, content}, ...]
+
+const MAX_MESSAGES = 5;
+
+function saveMessage(sessionId, role, content) {
+  if (!shortTermMemory.has(sessionId)) {
+    shortTermMemory.set(sessionId, []);
+  }
+  const memory = shortTermMemory.get(sessionId);
+  memory.push({ role, content });
+  if (memory.length > MAX_MESSAGES) memory.shift(); // remove oldest
+  shortTermMemory.set(sessionId, memory);
+}
+
+function getMemory(sessionId) {
+  return shortTermMemory.get(sessionId) || [];
+}
+
+
 export async function askQuestionHandler(req, res) {
-  const { question } = req.body;
+  const { question, sessionId } = req.body;
 
   if (!question) return res.status(400).json({ error: "Question is required" });
-
+  saveMessage(sessionId, "user", question);
   // Check if the question is about downloading or viewing the resume
   const resumeRegex = /\b(resume|cv|curriculum vitae)\b.*\b(download|view|see|check|get|send)\b|\b(download|view|see|check|get|send)\b.*\b(resume|cv|curriculum vitae)\b/i;
   
@@ -34,7 +54,11 @@ export async function askQuestionHandler(req, res) {
     );
 
     const openai = connectionManager.getOpenAIClient();
-    
+
+    const conversationHistory = getMemory(sessionId)
+      .map(msg => `${msg.role === "user" ? "User" : "Assistant"}: ${msg.content}`)
+      .join("\n");
+
     const systemPrompt = `
     You are an AI assistant representing Louis Yangga, a passionate Graduate Software Engineer specializing in backend systems, AI, and software development.
     NEVER use "I", "me", or "my" — always refer to "Louis", "he", or "his".
@@ -51,6 +75,9 @@ export async function askQuestionHandler(req, res) {
     `;
     
     const userPrompt = `
+    Conversation History:
+    ${conversationHistory}
+
     Context:
     ${context}
     
