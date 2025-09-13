@@ -117,13 +117,27 @@ const API_URL = import.meta.env.VITE_API_URL;
 
       // Connect to Socket.IO server
       const socket = io(`${ONBOARDING_API_URL}`);
+      let serverResponseTimeout;
+
+      const resetServerResponseTimeout = () => {
+        clearTimeout(serverResponseTimeout);
+        serverResponseTimeout = setTimeout(() => {
+          addLog('$ No response from server for over a minute. Disconnecting.', 'error');
+          socket.disconnect();
+          setIsSubmitting(false);
+        }, 60000); // 1 minute
+      };
+      
+      resetServerResponseTimeout(); // Start timeout for connection
       
       socket.on('connect', () => {
+        resetServerResponseTimeout(); // Reset timeout on connect
         setIsConnected(true);
         addLog('$ Connected to server', 'info');
       });
 
       socket.on('log', (data) => {
+        resetServerResponseTimeout(); // Reset timeout on each log
         try {
           // Expecting { email, step, status, timestamp, _id, __v }
           if (data.step && data.status) {
@@ -152,12 +166,14 @@ const API_URL = import.meta.env.VITE_API_URL;
       });
 
       socket.on('error', (err) => {
+        clearTimeout(serverResponseTimeout);
         addLog('$ Socket.IO error occurred', 'error');
         setIsSubmitting(false);
         socket.disconnect();
       });
 
       socket.on('disconnect', () => {
+        clearTimeout(serverResponseTimeout);
         setIsConnected(false);
         // log disconnect
       });
