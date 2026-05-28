@@ -221,7 +221,7 @@ const AdminPanel = ({ token }) => {
           <FileInput
             type="file"
             id="resume"
-            accept=".pdf,.doc,.docx"
+            accept=".pdf"
             onChange={handleFileChange}
           />
           <Button as="label" htmlFor="resume">
