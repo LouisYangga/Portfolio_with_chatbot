@@ -10,6 +10,7 @@ import Contact from './components/sections/Contact'
 import Demo from './components/sections/Demo'
 import MobileMenu from './components/MobileMenu'
 import Education from './components/sections/Education'
+import Experience, { experience } from './components/sections/Experience'
 import AdminModal from './components/AdminModal'
 import AdminPanel from './components/AdminPanel'
 import OnboardingDemoPage from './components/OnboardingDemoPage';
@@ -77,23 +78,28 @@ function App() {
               <NavLink href="/#home">Home</NavLink>
               <NavLink href="/#chatbot">AI Assistant</NavLink>
               <NavLink href="/#about">About</NavLink>
+              {experience.length > 0 && <NavLink href="/#experience">Experience</NavLink>}
               <NavLink href="/#education">Education</NavLink>
-              <NavLink href="/#work">Work</NavLink>
+              <NavLink href="/#work">Projects</NavLink>
               <NavLink href="/#demo">Demo(s)</NavLink>
               <NavLink href="/#contact">Contact</NavLink>
             </NavLinks>
             
 
             <SocialLinks>
-              <a href="https://github.com/LouisYangga" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/LouisYangga" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
                 <FiGithub />
               </a>
-              <a href="https://linkedin.com/in/louis-yangga" target="_blank" rel="noopener noreferrer">
+              <a href="https://linkedin.com/in/louis-yangga" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
                 <FiLinkedin />
               </a>
             </SocialLinks>
 
-            <HamburgerButton onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <HamburgerButton
+              aria-label="Open menu"
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
               <FiMenu />
             </HamburgerButton>
           </Nav>
@@ -112,6 +118,11 @@ function App() {
               <section id="about">
                 <About />
               </section>
+              {experience.length > 0 && (
+                <section id="experience-wrapper">
+                  <Experience />
+                </section>
+              )}
               <section id="education">
                 <Education />
               </section>

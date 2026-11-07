@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { reveal } from '../../utils/motion'
 import { FiGithub, FiExternalLink, FiPlay, FiCode } from 'react-icons/fi'
 import { DemoSection } from '../../styles/SectionStyles'
 import { useNavigate } from 'react-router-dom'
@@ -11,8 +12,8 @@ const Demo = ({ onPageChange }) => {
   const demos = [
     {
       title: 'AI Chatbot Assistant',
-      description: 'Interactive AI-powered chatbot that can answer questions about my background, skills, and projects. Built with OpenAI API and integrated with PineCone for knowledge retrieval.',
-      tech: ['React', 'Node.js', 'OpenAI API', 'PineCone', 'Styled Components'],
+      description: 'Interactive AI-powered chatbot that can answer questions about my background, skills, and projects. Built with OpenAI API and integrated with Pinecone for knowledge retrieval.',
+      tech: ['React', 'Node.js', 'OpenAI API', 'Pinecone', 'Styled Components'],
       github: 'https://github.com/LouisYangga/Portfolio_with_chatbot',
       live: 'https://louisyangga.com/#chatbot',
       demoUrl: '/#chatbot',
@@ -20,7 +21,7 @@ const Demo = ({ onPageChange }) => {
     },
     {
       title: 'Onboarding Automation',
-      description: 'Onboarding automation for new employees. This project automates the onboarding process for new employees by  create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department. The project uses Node.js, MongoDB, Express.js, and n8n.',
+      description: 'Onboarding automation for new employees. It creates the user in the database, then sends a welcome email, a Google Calendar invitation and, if provided, a GitHub organization invite. The form collects the new employee\'s name, email, and department. The project uses Node.js, MongoDB, Express.js, and n8n.',
       tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
       github: 'https://github.com/LouisYangga/OnboardingAutomation',
       demoUrl: 'onboarding',
@@ -47,10 +48,7 @@ const Demo = ({ onPageChange }) => {
   return (
     <DemoSection id="demo">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        {...reveal()}
       >
         <h2 className="section-heading">Interactive Demos</h2>
         <p className="section-description">
@@ -62,10 +60,7 @@ const Demo = ({ onPageChange }) => {
             <motion.div
               key={i}
               className="demo-card"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              viewport={{ once: true }}
+              {...reveal(Math.min(i, 3) * 0.05)}
             >
               <div className="demo-header">
                 <div className="demo-icon">
@@ -73,12 +68,12 @@ const Demo = ({ onPageChange }) => {
                 </div>
                 <div className="demo-links">
                   {demo.github && (
-                    <a href={demo.github} target="_blank" rel="noopener noreferrer" title="View Code">
+                    <a href={demo.github} target="_blank" rel="noopener noreferrer" title="View Code" aria-label={`${demo.title} source code on GitHub`}>
                       <FiGithub />
                     </a>
                   )}
                   {demo.live && (
-                    <a href={demo.live} target="_blank" rel="noopener noreferrer" title="Live Demo">
+                    <a href={demo.live} target="_blank" rel="noopener noreferrer" title="Live Demo" aria-label={`${demo.title} live demo`}>
                       <FiExternalLink />
                     </a>
                   )}

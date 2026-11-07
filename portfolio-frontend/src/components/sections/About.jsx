@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { reveal } from '../../utils/motion'
 import { AboutSection } from '../../styles/SectionStyles'
 
 const About = () => {
@@ -12,7 +13,7 @@ const About = () => {
     'Git & Docker',
     'AWS',
     'n8n',
-    'RABBITMQ',
+    'RabbitMQ',
     'OpenAI API',
     'Pinecone'
   ]
@@ -21,10 +22,7 @@ const About = () => {
     <AboutSection id="about">
       <motion.div
         className="inner"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        {...reveal()}
       >
         <div className="about-text">
           <h2 className="section-heading">About Me</h2>
@@ -56,10 +54,7 @@ const About = () => {
             {skills.map((skill, i) => (
               <motion.li 
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
-                viewport={{ once: true }}
+                {...reveal(Math.min(i, 6) * 0.03)}
               >
                 {skill}
               </motion.li>

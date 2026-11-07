@@ -4,14 +4,10 @@ import { Hero as HeroSection } from '../../styles/SectionStyles'
 const Hero = () => {
   return (
     <HeroSection>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1>Hi, my name is</h1>
-        <h2>Louis Yangga.</h2>
-        <h3>Software Engineer & Problem Solver.</h3>
+      <div>
+        <p className="hero-greeting">Hi, my name is</p>
+        <h1>Louis Yangga.</h1>
+        <h2>Software Engineer & Problem Solver.</h2>
         <p>
         I'm a passionate software engineer with a strong foundation in full-stack development, machine learning, and user-focused design.
         I enjoy turning complex ideas into scalable, clean code — from APIs to intelligent systems. Currently,
@@ -20,7 +16,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          transition={{ delay: 0.15, duration: 0.3 }}
         >
           <a
             href="#chatbot"
@@ -46,7 +42,7 @@ const Hero = () => {
             Check out my Assistant!
           </a>
         </motion.div>
-      </motion.div>
+      </div>
     </HeroSection>
   )
 }

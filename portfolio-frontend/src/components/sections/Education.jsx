@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { reveal } from '../../utils/motion'
 import { EducationSection } from '../../styles/SectionStyles'
 import styled from 'styled-components'
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const ResumeButton = styled.a`
+const ResumeButton = styled.button`
   display: inline-block;
   margin-top: 2rem;
   padding: 1rem 2rem;
@@ -20,8 +21,15 @@ const ResumeButton = styled.a`
   cursor: pointer;
 
   &:hover {
+    border-color: var(--green);
     background-color: rgba(100,255,218,0.1);
     transform: translateY(-3px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
   }
 `
 
@@ -126,10 +134,7 @@ const Education = () => {
     <EducationSection id="education">
       <motion.div
         className="inner"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        {...reveal()}
       >
         <h2 className="section-heading">Education</h2>
         <ResponsiveContainer>
@@ -154,19 +159,15 @@ const Education = () => {
             </ul>
           </div>
         </ResponsiveContainer>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          style={{ textAlign: 'center' }}
-        >
+        <div style={{ textAlign: 'center' }}>
           <ResumeButton
+            type="button"
             onClick={handleResumeDownload}
             disabled={isLoading}
           >
             {isLoading ? 'Loading...' : 'Download Resume'}
           </ResumeButton>
-        </motion.div>
+        </div>
       </motion.div>
     </EducationSection>
   )

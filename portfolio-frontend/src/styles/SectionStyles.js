@@ -9,19 +9,19 @@ export const Hero = styled(Section)`
   padding-top: 70px; /* Account for header */
   margin: 0 auto;
 
-  h1 {
-    margin: 1 0 30px 4px;
+  .hero-greeting {
+    margin: 0 0 10px 4px;
     color: var(--green);
     font-family: var(--font-mono);
     font-size: clamp(var(--fz-sm), 5vw, var(--fz-md));
     font-weight: 400;
   }
 
-  h2 {
+  h1 {
     font-size: clamp(40px, 8vw, 80px);
   }
 
-  h3 {
+  h2 {
     margin-top: 10px;
     color: var(--slate);
     line-height: 0.9;
@@ -200,6 +200,50 @@ export const WorkSection = styled(Section)`
     &:hover {
       transform: translateY(-5px);
     }
+
+    h3 {
+      color: var(--lightest-slate);
+    }
+
+    p {
+      margin: 10px 0 20px;
+      color: var(--slate);
+    }
+  }
+
+  .project-links {
+    display: flex;
+    gap: 14px;
+    margin: 6px 0 4px;
+
+    a {
+      color: var(--slate);
+      font-size: 20px;
+      transition: color 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: var(--green);
+      }
+    }
+  }
+
+  .project-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 3px 8px;
+      border: 1px solid rgba(100, 255, 218, 0.3);
+      border-radius: 3px;
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: var(--fz-xs);
+    }
   }
 `
 
@@ -364,6 +408,114 @@ export const ContactSection = styled(Section)`
     &:hover,
     &:focus {
       background-color: rgba(100,255,218,0.1);
+    }
+  }
+`
+export const ExperienceSection = styled(Section)`
+  .timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 28px;
+    list-style: none;
+    border-left: 2px solid var(--lightest-navy);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 40px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: -36px;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      background-color: var(--navy);
+    }
+  }
+
+  .period {
+    margin: 0 0 6px;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+  }
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: var(--fz-xxl, 22px);
+    color: var(--lightest-slate);
+  }
+
+  .company,
+  .company a {
+    color: var(--green);
+  }
+
+  .company a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    svg {
+      font-size: 0.7em;
+    }
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+  }
+
+  .location {
+    margin: 0 0 12px;
+    color: var(--slate);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+  }
+
+  .points {
+    margin: 12px 0 16px;
+    padding: 0;
+    list-style: none;
+
+    li {
+      position: relative;
+      margin-bottom: 8px;
+      padding-left: 20px;
+      color: var(--slate);
+
+      &::before {
+        content: '▹';
+        position: absolute;
+        left: 0;
+        color: var(--green);
+      }
+    }
+  }
+
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 3px 8px;
+      border: 1px solid rgba(100, 255, 218, 0.3);
+      border-radius: 3px;
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: var(--fz-xs);
     }
   }
 `

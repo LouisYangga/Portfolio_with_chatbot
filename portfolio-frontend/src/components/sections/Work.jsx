@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { reveal } from '../../utils/motion'
 import { FiGithub, FiExternalLink } from 'react-icons/fi'
 import { WorkSection } from '../../styles/SectionStyles'
 
@@ -7,21 +8,21 @@ const Work = () => {
     {
       title: 'AI-Enhanced Developer Portfolio Website',
       description: 'A modern, responsive portfolio site built using React and an integrated AI assistant for interactive user engagement. The backend is powered by Node.js, enabling scalable support for chatbot functionality and content management.',
-      tech: ['React', 'Node.js', 'Framer Motion', 'Styled Components', 'PineCone', 'OpenAI', 'AWS S3','MongoDB'],
+      tech: ['React', 'Node.js', 'Framer Motion', 'Styled Components', 'Pinecone', 'OpenAI', 'AWS S3','MongoDB'],
       github: 'https://github.com/LouisYangga/Portfolio_with_chatbot',
       external: '#chatbot',
     },
     {
       title: 'Onboarding Automation',
-      description: 'Onboarding automation simulation for new employees. The system is built with Node.js, MongoDB, Express.js, and n8n. It create user into database, sending them welcome email, google calendar invitation and github organization invite if provided. The form collects the new employee\'s name, email, and department.',
+      description: 'Onboarding automation simulation for new employees. The system is built with Node.js, MongoDB, Express.js, and n8n. It creates the user in the database, then sends a welcome email, a Google Calendar invitation and, if provided, a GitHub organization invite. The form collects the new employee\'s name, email, and department.',
       tech: ['Node.js', 'MongoDB', 'Express.js', 'n8n'],
       github: 'https://github.com/LouisYangga/OnboardingAutomation',
       external: '#demo',
     },
     {
-      title: 'Multi Label Classification',
+      title: 'Multi-Label News Classification',
       description: 'Refined a pre-trained RoBERTa model for multi-label classification of news articles across 8 categories, using a balanced dataset of 10,000 samples per class. Initially developed for single-label classification, the project transitioned to multi-label after identifying overlapping topic predictions during error analysis.',
-      tech: ['Python', 'PyTorch', 'Hugging Face Transformer', 'Pandas', 'NumPy'],
+      tech: ['Python', 'PyTorch', 'Hugging Face Transformers', 'Pandas', 'NumPy'],
       github: 'https://github.com/LouisYangga/multi_label_news_classifier',
     },
     {
@@ -47,10 +48,7 @@ const Work = () => {
   return (
     <WorkSection id="work">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        {...reveal()}
       >
         <h2 className="section-heading">Some Things I've Built</h2>
         <div className="projects-grid">
@@ -58,21 +56,18 @@ const Work = () => {
             <motion.div
               key={i}
               className="project-card"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              viewport={{ once: true }}
+              {...reveal(Math.min(i, 3) * 0.05)}
             >
               <div className="project-top">
                 <h3>{project.title}</h3>
                 <div className="project-links">
                   {project.github && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} source code on GitHub`}>
                       <FiGithub />
                     </a>
                   )}
                   {project.external && (
-                    <a href={project.external} target={project.external.startsWith('#') ? '_self' : '_blank'} rel={project.external.startsWith('#') ? '' : 'noopener noreferrer'}>
+                    <a href={project.external} aria-label={`${project.title} live demo`} target={project.external.startsWith('#') ? '_self' : '_blank'} rel={project.external.startsWith('#') ? '' : 'noopener noreferrer'}>
                       <FiExternalLink />
                     </a>
                   )}
