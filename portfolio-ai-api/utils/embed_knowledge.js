@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
+import "../config/env.js";
 import fs from "fs/promises";
 import connectionManager from "./connections.js";
 
-dotenv.config();
 
 // Load knowledge base
 async function loadKnowledgeBase() {

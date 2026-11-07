@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
+import "./config/env.js";
 import connectDB from "./config/db.js";
 import { seedAdminUser } from "./controller/authController.js";
 
-dotenv.config();
 
 (async () => {
   try {

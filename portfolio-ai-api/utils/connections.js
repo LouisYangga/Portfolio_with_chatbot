@@ -1,8 +1,7 @@
+import "../config/env.js";
 import { OpenAI } from "openai";
-import dotenv from "dotenv";
 import { Pinecone } from "@pinecone-database/pinecone";
 
-dotenv.config();
 
 class ConnectionManager {
     constructor() {

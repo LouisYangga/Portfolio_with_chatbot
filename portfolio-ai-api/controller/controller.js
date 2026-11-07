@@ -86,13 +86,15 @@ export async function askQuestionHandler(req, res) {
     `;
     
     const gptRes = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: process.env.OPENAI_CHAT_MODEL || "gpt-5.6-luna",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
       ],
-      temperature: 0.7,
-      max_tokens: 500,
+      // GPT-5.6 models only accept the default temperature and use
+      // max_completion_tokens (which also covers reasoning tokens).
+      reasoning_effort: "low",
+      max_completion_tokens: 1000,
     });
     
     const answer = gptRes.choices[0].message.content;

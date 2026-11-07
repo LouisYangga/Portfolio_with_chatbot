@@ -1,11 +1,10 @@
+import "./config/env.js";
 import express from "express";
-import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import routes from "./routes/routes.js";
 import cors from "cors";
 import connectionManager from "./utils/connections.js";
 
-dotenv.config();
 const app = express();
 app.use(express.json());
 

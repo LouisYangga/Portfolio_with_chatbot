@@ -1,10 +1,9 @@
+import "../config/env.js";
 import * as fs from "fs/promises";
-import dotenv from "dotenv";
 import path from "path";
 import { getEmbedding } from "./embed_knowledge.js";
 import connectionManager from "./connections.js";
 
-dotenv.config();
 
 export async function addKnowledge(id, content, category) {
   try {

@@ -1,7 +1,6 @@
+import "../config/env.js";
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 // Create reusable transporter
 const transporter = nodemailer.createTransport({
