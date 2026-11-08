@@ -52,6 +52,16 @@ const MobileMenu = ({ isOpen, onClose }) => {
             {link.label}
           </a>
         ))}
+        <a
+          href="/stocks"
+          onClick={e => {
+            e.preventDefault();
+            navigate('/stocks');
+            onClose();
+          }}
+        >
+          Stocks
+        </a>
       </nav>
       <div className="mobile-social-links">
         <a href="https://github.com/LouisYangga" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">

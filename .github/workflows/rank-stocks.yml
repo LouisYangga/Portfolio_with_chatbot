@@ -1,0 +1,65 @@
+name: Rank stocks
+
+# Recomputes the stock dashboard rankings and writes them to MongoDB.
+# Runs here rather than on Render because the free Render instance sleeps
+# and a full run (~500 tickers, rate-limited APIs) takes 20-40 minutes.
+on:
+  schedule:
+    # Full run after the US close (21:30 UTC = 4:30/5:30pm New York), Mon-Fri.
+    - cron: "30 21 * * 1-5"
+    # News-sentiment refresh before the US open (12:30 UTC), Mon-Fri.
+    - cron: "30 12 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "full or sentiment-only"
+        type: choice
+        options: [full, sentiment-only]
+        default: full
+      limit:
+        description: "Only rank this many tickers (blank = all)"
+        required: false
+        default: ""
+
+concurrency:
+  group: rank-stocks
+  cancel-in-progress: false
+
+jobs:
+  rank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    defaults:
+      run:
+        working-directory: portfolio-ai-api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio-ai-api/package-lock.json
+
+      - run: npm ci
+
+      - name: Run ranking job
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_CHAT_MODEL: ${{ vars.OPENAI_CHAT_MODEL }}
+          SENTIMENT_MODE: ${{ vars.SENTIMENT_MODE || secrets.SENTIMENT_MODE }}
+          SCHEDULE: ${{ github.event.schedule }}
+          MODE: ${{ inputs.mode }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          ARGS=""
+          if [ "$SCHEDULE" = "30 12 * * 1-5" ] || [ "$MODE" = "sentiment-only" ]; then
+            ARGS="--sentiment-only"
+          fi
+          if [ -n "$LIMIT" ]; then
+            ARGS="$ARGS --limit $LIMIT"
+          fi
+          echo "node jobs/rankStocks.js $ARGS"
+          node jobs/rankStocks.js $ARGS

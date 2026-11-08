@@ -4,8 +4,10 @@ import connectDB from "./config/db.js";
 import routes from "./routes/routes.js";
 import cors from "cors";
 import connectionManager from "./utils/connections.js";
+import User from "./models/userModel.js";
 
 const app = express();
+app.set("trust proxy", 1); // behind Render's proxy — needed for per-IP rate limiting
 app.use(express.json());
 
 // Configure CORS
@@ -26,6 +28,10 @@ const initializeServices = async () => {
     // Connect to MongoDB
     await connectDB();
     console.log("MongoDB connected successfully");
+
+    // The users collection predates email sign-up: rebuild indexes so `username`
+    // and `email` are unique-but-sparse (otherwise a 2nd user without a username collides).
+    await User.syncIndexes();
 
     // Initialize OpenAI and Pinecone connections
     await connectionManager.initialize();

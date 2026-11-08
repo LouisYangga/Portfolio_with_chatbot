@@ -14,5 +14,7 @@ Thumbs.db
 
 # local json files
 portfolio-ai-api/data/*.json
+# ...except the public S&P 500 list the stocks dashboard needs at runtime
+!portfolio-ai-api/data/universe.json
 
 .claude/

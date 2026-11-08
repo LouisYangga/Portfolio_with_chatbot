@@ -14,6 +14,10 @@ import Experience, { experience } from './components/sections/Experience'
 import AdminModal from './components/AdminModal'
 import AdminPanel from './components/AdminPanel'
 import OnboardingDemoPage from './components/OnboardingDemoPage';
+import { AuthProvider, RequireAuth } from './context/AuthContext';
+import StocksAuthPage from './components/stocks/StocksAuthPage';
+import SectorOnboarding from './components/stocks/SectorOnboarding';
+import StocksDashboard from './components/stocks/StocksDashboard';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -62,6 +66,7 @@ function App() {
 
   return (
     <Router>
+      <AuthProvider>
       <div className="app">
         <StyledHeader>
           <Nav>
@@ -82,6 +87,7 @@ function App() {
               <NavLink href="/#education">Education</NavLink>
               <NavLink href="/#work">Projects</NavLink>
               <NavLink href="/#demo">Demo(s)</NavLink>
+              <NavLink href="/stocks">Stocks</NavLink>
               <NavLink href="/#contact">Contact</NavLink>
             </NavLinks>
             
@@ -138,6 +144,10 @@ function App() {
             </MainContent>
           } />
           <Route path="/onboarding-demo" element={<OnboardingDemoPage />} />
+          <Route path="/stocks/login" element={<StocksAuthPage mode="login" />} />
+          <Route path="/stocks/signup" element={<StocksAuthPage mode="signup" />} />
+          <Route path="/stocks/onboarding" element={<RequireAuth allowUnonboarded><SectorOnboarding /></RequireAuth>} />
+          <Route path="/stocks" element={<RequireAuth><StocksDashboard /></RequireAuth>} />
         </Routes>
 
         <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
@@ -148,6 +158,7 @@ function App() {
         />
         {adminToken && <AdminPanel token={adminToken} />}
       </div>
+      </AuthProvider>
     </Router>
   );
 }
