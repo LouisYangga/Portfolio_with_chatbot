@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { FiMenu, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { MainContent, StyledHeader, Nav, NavLinks, NavLink, SocialLinks, HamburgerButton, LogoLink, LogoSVG, LogoRect, LogoText } from './styles/StyledComponents'
 import Hero from './components/sections/Hero'
@@ -28,8 +28,10 @@ function ScrollToHash() {
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
+    } else {
+      window.scrollTo(0, 0); // new page (e.g. /stocks) starts at the top
     }
-  }, [location]);
+  }, [location.pathname, location.hash]);
   return null;
 }
 
@@ -87,7 +89,7 @@ function App() {
               <NavLink href="/#education">Education</NavLink>
               <NavLink href="/#work">Projects</NavLink>
               <NavLink href="/#demo">Demo(s)</NavLink>
-              <NavLink href="/stocks">Stocks</NavLink>
+              <NavLink as={Link} to="/stocks">Stocks</NavLink>
               <NavLink href="/#contact">Contact</NavLink>
             </NavLinks>
             

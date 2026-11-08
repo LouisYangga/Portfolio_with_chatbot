@@ -19,7 +19,10 @@ app.use(cors({
     "http://localhost:5173"  // For local development
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "x-api-key", "Authorization"]
+  allowedHeaders: ["Content-Type", "x-api-key", "Authorization"],
+  // Let browsers cache the CORS preflight (Chrome caps at 2h) instead of
+  // sending an extra OPTIONS round trip to Render before every API call.
+  maxAge: 7200
 }));
 
 // Initialize all connections

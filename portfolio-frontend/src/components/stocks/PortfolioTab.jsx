@@ -3,6 +3,8 @@ import { FiEdit2, FiTrash2, FiPlus, FiRefreshCw } from 'react-icons/fi';
 import { stocksApi } from '../../api/stocksApi';
 import HoldingModal from './HoldingModal';
 import ConfirmDialog from './ConfirmDialog';
+import { SummarySkeleton, TableSkeleton } from './Skeleton';
+import { useAuth } from '../../context/AuthContext';
 import { money, signedMoney, pct, num } from './format';
 import {
   SummaryGrid, Stat, Signed, TableWrap, Table, Ticker, Button, IconButton, Toolbar, EmptyState, ErrorText, Notice,
@@ -10,22 +12,37 @@ import {
 
 const REFRESH_MS = 60 * 1000;
 
+// Last portfolio response, per user, for an instant first paint (this tab only).
+const cacheKey = (userId) => `portfolioCache:${userId}`;
+function readCache(userId) {
+  try { return JSON.parse(sessionStorage.getItem(cacheKey(userId))) || null; } catch { return null; }
+}
+function writeCache(userId, data) {
+  try { sessionStorage.setItem(cacheKey(userId), JSON.stringify(data)); } catch { /* ignore */ }
+}
+
 export default function PortfolioTab({ addRequest, onAddHandled }) {
-  const [data, setData] = useState(null);
+  const { user } = useAuth();
+  const [data, setData] = useState(() => readCache(user.id));
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !readCache(user.id));
+  const [refreshing, setRefreshing] = useState(false);
   const [modal, setModal] = useState({ open: false, holding: null, presetTicker: '' });
 
   const load = useCallback(async () => {
+    setRefreshing(true);
     try {
-      setData(await stocksApi.portfolio());
+      const fresh = await stocksApi.portfolio();
+      setData(fresh);
+      writeCache(user.id, fresh);
       setError('');
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
-  }, []);
+  }, [user.id]);
 
   useEffect(() => {
     load();
@@ -64,6 +81,7 @@ export default function PortfolioTab({ addRequest, onAddHandled }) {
 
   return (
     <>
+      {loading && <SummarySkeleton />}
       {s && holdings.length > 0 && (
         <SummaryGrid>
           <Stat><span>Market value</span><strong>{money(s.totalValue)}</strong></Stat>
@@ -79,10 +97,10 @@ export default function PortfolioTab({ addRequest, onAddHandled }) {
 
       <Toolbar>
         <small>
-          {data?.asOf && `Prices as of ${new Date(data.asOf).toLocaleTimeString()} · refreshes every minute`}
+          {refreshing && data ? 'Updating prices…' : data?.asOf && `Prices as of ${new Date(data.asOf).toLocaleTimeString()} · refreshes every minute`}
         </small>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <Button onClick={load} aria-label="Refresh prices"><FiRefreshCw /></Button>
+          <Button onClick={load} aria-label="Refresh prices" disabled={refreshing}><FiRefreshCw /></Button>
           <Button $primary onClick={() => setModal({ open: true, holding: null, presetTicker: '' })}><FiPlus /> Add holding</Button>
         </div>
       </Toolbar>
@@ -91,7 +109,7 @@ export default function PortfolioTab({ addRequest, onAddHandled }) {
       {s?.unpriced > 0 && <Notice $warn>{s.unpriced} holding(s) have no live price right now and are excluded from totals.</Notice>}
 
       {loading ? (
-        <p>Loading portfolio…</p>
+        <TableSkeleton />
       ) : holdings.length === 0 ? (
         <EmptyState>
           <h3>Your portfolio is empty</h3>
